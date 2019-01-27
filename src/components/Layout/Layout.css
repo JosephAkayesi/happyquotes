@@ -1,0 +1,36 @@
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bgImg {
+    position: relative;
+    opacity: 0.65;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(../../images/banner.png);
+    height: 100vh;
+}
+
+.quote {
+    font-size: 3rem;
+}
+
+.social {
+    width: 10px; 
+    height: 10px;
+}
+
+@media (max-width: 768px) {
+    /* .bgImg {
+    /* background-image: url(../../images/banner_mob.png); 
+    } */
+
+    .quote {
+        font-size: 2.5rem
+    }
+}
+
