@@ -1,19 +1,6 @@
 import React, { Component } from 'react';
 
 class Login extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            username: '',
-            password: ''
-        };
-    }
-
-    onInputChange = (event) => {
-        this.setState({ [event.target.id]: event.target.value })
-    }
-
     render() {
         return (
             <div className="container">
@@ -24,11 +11,11 @@ class Login extends Component {
                                 <legend className="display-4 pb-4">Login</legend>
                                 <div className="form-group">
                                     <label htmlFor="username">Username</label>
-                                    <input type="text" className="form-control" id="username" placeholder="Enter email" onChange={this.onInputChange} value={this.state.username} required />
+                                    <input type="text" className="form-control" id="usernameOrEmail" placeholder="Enter email" onChange={this.props.onInputChange} value={this.props.usernameOrEmail} required />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password">Password</label>
-                                    <input type="password" className="form-control" id="password" placeholder="Password" onChange={this.onInputChange} value={this.state.password} required />
+                                    <input type="password" className="form-control" id="password" placeholder="Password" onChange={this.props.onInputChange} value={this.props.password} required />
                                 </div>
                                 <button type="submit" className="btn btn-primary" onClick={this.props.authenticateUser}>Submit</button>
                             </fieldset>

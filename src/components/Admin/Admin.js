@@ -9,11 +9,26 @@ class Admin extends Component {
     super()
 
     this.state = {
-      isAuthenticated: false
+      isAuthenticated: false,
+      usernameOrEmail: '',
+      password: ''
     }
   }
 
-  authenticateUser = () => {
+  onInputChange = (event) => {
+    this.setState({ [event.target.id]: event.target.value })
+}
+
+  authenticateUser = (event) => {
+    event.preventDefault()
+    console.log('pressed')
+
+    // console.log(this.state.usernameOrEmail.trim())
+    // console.log(this.state.password)
+
+    // let userCredentials = { 'usernameOrEmail': this.state.usernameOrEmail.trim(), 'password': this.state.password}
+    // console.log(JSON.stringify(userCredentials))
+    // console.log(userCredentials)
     this.setState({ isAuthenticated: true })
   }
 
@@ -23,7 +38,12 @@ class Admin extends Component {
       <div>
         <Navbar isAuthenticated={this.state.isAuthenticated} />
         <div className='container'>
-          {this.state.isAuthenticated ? <Dashboard /> : <Login authenticateUser={this.authenticateUser} />}
+          {
+            this.state.isAuthenticated ? 
+            <Dashboard /> 
+            : 
+            <Login usernameOrEmail={this.state.usernameOrEmail} password={this.state.password} authenticateUser={this.authenticateUser} onInputChange={this.onInputChange} />
+          }
         </div>
       </div>
     )
