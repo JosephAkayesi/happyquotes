@@ -30,7 +30,7 @@ router.post('/register', (req, res) => {
     Admin.findOne({ email: req.body.email })
         .then(admin => {
             if (admin) {
-                // errors.email = 'Email already exists'
+                errors.email = 'Email already exists'
                 return res.status(400).json(errors)
             }
             else {
