@@ -27,6 +27,10 @@ module.exports = validateRegisterInput = data => {
         errors.username = 'Username field is required'
     }
 
+    if (!validator.isAlphanumeric(data.username)) {
+        errors.username = 'Username field should not include regex characters.'
+    }
+
     if (validator.isEmpty(data.email)) {
         errors.email = 'Email field is required'
     }
@@ -43,13 +47,13 @@ module.exports = validateRegisterInput = data => {
         errors.password = 'Password must be at least 6 characters'
     }
 
-    if(validator.isEmpty(data.confirmPassword)){
+    if (validator.isEmpty(data.confirmPassword)) {
         errors.confirmPassword = 'Confirm Password field is required'
-    } 
+    }
 
-    if(!validator.equals(data.password, data.confirmPassword)){
+    if (!validator.equals(data.password, data.confirmPassword)) {
         errors.confirmPassword = 'Passwords must match'
-    } 
+    }
 
     if (validator.isEmpty(data.magicPassword)) {
         errors.magicPassword = 'Magic Password field is required'
