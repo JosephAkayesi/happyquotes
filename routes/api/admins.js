@@ -27,6 +27,11 @@ router.post('/register', (req, res) => {
         return res.status(400).json(errors);
     }
 
+    // if(req.body.magicPassword !== 'crystal') {
+    //     console.log('Magic password invalid')
+    //     return
+    // }
+
     Admin.findOne({ email: req.body.email })
         .then(admin => {
             if (admin) {
