@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Navbar from '../Navbar/Navbar'
-import Login from '../Login/Login'
+import Entry from '../Entry/Entry'
 import Dashboard from '../Dashboard/Dashboard'
 // import { BrowserRouter, Route } from 'react-router-dom'
 
@@ -15,9 +15,7 @@ class Admin extends Component {
     }
   }
 
-  onInputChange = (event) => {
-    this.setState({ [event.target.id]: event.target.value })
-}
+
 
   authenticateUser = (event) => {
     event.preventDefault()
@@ -32,20 +30,19 @@ class Admin extends Component {
     this.setState({ isAuthenticated: true })
   }
 
-
   render() {
     return (
-      <div>
-        <Navbar isAuthenticated={this.state.isAuthenticated} />
-        <div className='container'>
-          {
-            this.state.isAuthenticated ? 
-            <Dashboard /> 
-            : 
-            <Login usernameOrEmail={this.state.usernameOrEmail} password={this.state.password} authenticateUser={this.authenticateUser} onInputChange={this.onInputChange} />
-          }
+        <div>
+          <Navbar isAuthenticated={this.state.isAuthenticated} />
+          <div className='container'>
+            {
+              this.state.isAuthenticated ?
+                <Dashboard />
+                :
+                <Entry />
+            }
+          </div>
         </div>
-      </div>
     )
   }
 }
