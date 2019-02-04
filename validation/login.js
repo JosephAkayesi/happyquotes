@@ -8,15 +8,7 @@ module.exports = validateLoginInput = data => {
     data.password = !isEmpty(data.password) ? data.password : ''
 
     if (validator.isEmpty(data.usernameOrEmail)) {
-        errors.userNameOrEmail = 'No user was found with the username or password'
-    }
-
-    if (!validator.isEmail(data.email)) {
-        errors.email = 'Email field is invalid'
-    }
-
-    if (!validator.isEmail(data.email)) {
-        errors.email = 'Email field is invalid'
+        errors.usernameOrEmail = 'Username or Email field is required'
     }
 
     return {

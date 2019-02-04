@@ -4,9 +4,11 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const keys = require('../../config/keys')
 const passport = require('passport')
+const isEmpty = require('../../validation/isEmpty')
 
 // Load input validation
 const validateRegisterInput = require('../../validation/register')
+const validateLoginInput = require('../../validation/login')
 
 // Load admin model
 const Admin = require('../../models/Admin')
@@ -22,8 +24,8 @@ router.get('/test', (req, res) => res.json({ msg: 'Admins route works' }))
 router.post('/register', (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
 
-     // Check Validation
-    if(!isValid){
+    // Check Validation
+    if (!isValid) {
         return res.status(400).json(errors);
     }
 
@@ -32,10 +34,15 @@ router.post('/register', (req, res) => {
     //     return
     // }
 
-    Admin.findOne({ email: req.body.email })
+    Admin.findOne()
+        .or([{ email: req.body.email }, { username: req.body.username }])
         .then(admin => {
-            if (admin) {
+            if (admin !== null && admin.email.toLowerCase === req.body.email.toLowerCase) {
                 errors.email = 'Email already exists'
+                return res.status(400).json(errors)
+            }
+            else if (admin !== null && admin.username.toLowerCase === req.body.username.toLowerCase) {
+                errors.username = 'Username already exists'
                 return res.status(400).json(errors)
             }
             else {
@@ -70,18 +77,19 @@ router.post('/register', (req, res) => {
 // @desc    Login admin / Returning JWT token
 // @access  Public
 router.post('/login', (req, res) => {
-    // const { errors, isValid } = validateLoginInput(req.body);
+    const { errors, isValid } = validateLoginInput(req.body);
 
-    //Check Validation
-    // if (!isValid) {
-    //     return res.status(400).json(errors);
-    // }
+    // Check Validation
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
 
-    const email = req.body.email;
+    const usernameOrEmail = req.body.usernameOrEmail;
     const password = req.body.password;
 
     //Find Admin by email
-    Admin.findOne({ email })
+    Admin.findOne()
+        .or([{ email: usernameOrEmail }, { username: usernameOrEmail }])
         .then(admin => {
             if (!admin) {
                 // errors.email = 'User not found';
