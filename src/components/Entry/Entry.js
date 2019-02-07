@@ -20,9 +20,9 @@ class Entry extends Component {
         return (
             <div>
                 {this.state.isLogin ?
-                    <Login onInputChange={this.onInputChange} toggleLoginOrRegisterComponent={this.toggleLoginOrRegisterComponent} />
+                    <Login onInputChange={this.onInputChange} toggleLoginOrRegisterComponent={this.toggleLoginOrRegisterComponent} authenticateUser={this.props.authenticateUser}/>
                     :
-                    <Register onInputChange={this.onInputChange} toggleLoginOrRegisterComponent={this.toggleLoginOrRegisterComponent} />
+                    <Register onInputChange={this.onInputChange} toggleLoginOrRegisterComponent={this.toggleLoginOrRegisterComponent} authenticateUser={this.props.authenticateUser}/>
                 }
             </div>
         )

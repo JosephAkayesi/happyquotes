@@ -39,7 +39,7 @@ class Admin extends Component {
               this.state.isAuthenticated ?
                 <Dashboard />
                 :
-                <Entry />
+                <Entry authenticateUser={this.authenticateUser}/>
             }
           </div>
         </div>
