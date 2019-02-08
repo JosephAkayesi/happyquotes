@@ -8,7 +8,7 @@ const admins = require('../routes/api/admins')
 const quotes = require('../routes/api/quotes')
 
 // Cors middleware
-app.use(cors({ origin: '*' }))
+app.use(cors())
 
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }))
