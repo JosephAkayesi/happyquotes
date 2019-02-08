@@ -8,7 +8,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Route path='/' exact component={Layout} />
+          <Route exact path='/' component={Layout} />
           <Route path='/admin' exact component={Admin} />
         </div>
       </BrowserRouter>

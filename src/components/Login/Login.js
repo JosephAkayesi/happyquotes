@@ -14,6 +14,17 @@ class Login extends Component {
         this.setState({ [event.target.id]: event.target.value })
     }
 
+    onFormSubmit = (event) => {
+        event.preventDefault()
+
+        const existingUser = {
+            usernameOrEmail: this.state.usernameOrEmail,
+            password: this.state.password 
+        }
+
+        console.log(existingUser)
+    }
+
     render() {
         return (
             <div className="container">
@@ -30,7 +41,7 @@ class Login extends Component {
                                     <label htmlFor="password">Password</label>
                                     <input type="password" className="form-control" id="password" placeholder="Password" onChange={this.onInputChange} defaultValue={this.state.password} />
                                 </div>
-                                <button type="submit" className="btn btn-primary" onClick={this.props.authenticateUser}>Submit</button>
+                                <button type="submit" className="btn btn-primary" onClick={this.onFormSubmit}>Submit</button>
                                 <button type="button" className="btn btn-link d-block" style={{ paddingLeft: '0%', marginLeft: '0%', textDecoration: 'none' }}><small className="form-text" onClick={this.props.toggleLoginOrRegisterComponent}>Register instead ?</small></button>
                             </fieldset>
                         </form>
