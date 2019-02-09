@@ -7,7 +7,7 @@ import './Dashboard.css'
 const TableRow = ({ row, openQuoteDetails, deleteQuote }) => (
   <tr>
     <th scope="row" onClick={openQuoteDetails}>{row.author}</th>
-    <td onClick={openQuoteDetails}>{row.quote}</td>
+    <td onClick={openQuoteDetails}>{row.quote}<small id="admin" className="form-text text-muted">{row.admin}</small></td>
     <td><i className="fa fa-close" onClick={deleteQuote}></i></td>
   </tr>
 )
@@ -38,14 +38,17 @@ class Dashboard extends Component {
         {
           "quote": "Our industry does not respect tradition - it only respects innovation.",
           "author": "Satya Nadella",
+          "admin": "Joseph Akayesi"
         },
         {
           "quote": "Engineering is the closest thing to magic that exists in the world.",
           "author": "Elon Musk",
+          "admin": "Joseph Akayesi"
         },
         {
           "quote": "For me, it matters that we drive technology as an equalizing force, as an enabler for everyone around the world.",
           "author": "Sundar Pichai",
+          "admin": "Yasmin Adams"
         }
       ],
       addSource: add,

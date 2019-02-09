@@ -10,17 +10,20 @@ class Quotes extends Component {
                 {
                     "quote": "Our industry does not respect tradition - it only respects innovation.",
                     "author": "Satya Nadella",
-                    "position": "CEO of Microsoft"
+                    "position": "CEO of Microsoft",
+                    "admin": "Joseph Akayesi"
                 },
                 {
                     "quote": "Engineering is the closest thing to magic that exists in the world.",
                     "author": "Elon Musk",
-                    "position": "Tesla and SpaceX CEO"
+                    "position": "Tesla and SpaceX CEO",
+                    "admin": "Joseph Akayesi" 
                 },
                 {
                     "quote": "For me, it matters that we drive technology as an equalizing force, as an enabler for everyone around the world.",
                     "author": "Sundar Pichai",
-                    "position": "CEO of Google"
+                    "position": "CEO of Google",
+                    "admin": "Yasmine Adams",
                 }
             ],
 
