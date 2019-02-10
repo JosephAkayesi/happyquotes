@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import Navbar from '../Navbar/Navbar'
 import Entry from '../Entry/Entry'
 import Dashboard from '../Dashboard/Dashboard'
@@ -28,21 +29,21 @@ class Admin extends Component {
     // console.log(JSON.stringify(userCredentials))
     // console.log(userCredentials)
     this.setState({ isAuthenticated: true })
+    console.log(this.state.isAuthenticated)
   }
+
 
   render() {
     return (
+      <BrowserRouter>
         <div>
           <Navbar isAuthenticated={this.state.isAuthenticated} />
           <div className='container'>
-            {
-              this.state.isAuthenticated ?
-                <Dashboard />
-                :
-                <Entry authenticateUser={this.authenticateUser}/>
-            }
+            <Route path='/admin' exact strict render={() => this.state.isAuthenticated ? (<Redirect to='/admin/dashboard' />) : (<Entry authenticateUser={this.authenticateUser} />)} />
+            <Route exact path='/admin/dashboard' component={Dashboard} />
           </div>
         </div>
+      </BrowserRouter>
     )
   }
 }

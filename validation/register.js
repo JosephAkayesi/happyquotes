@@ -55,12 +55,12 @@ module.exports = validateRegisterInput = data => {
         errors.confirmPassword = 'Passwords must match'
     }
 
+    if (!validator.equals(data.magicPassword, 'crystal')) {
+        errors.magicPassword = 'Magic Password is invalid'
+    }
+    
     if (validator.isEmpty(data.magicPassword)) {
         errors.magicPassword = 'Magic Password field is required'
-    }
-
-    if (!validator.equals(data.magicPassword, 'crystal')) {
-        errors.magicPassword = 'Magic Password is very invalid'
     }
 
     return {
