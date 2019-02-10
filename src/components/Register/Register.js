@@ -28,7 +28,7 @@ class Register extends Component {
     onFormSubmit = (event) => {
         event.preventDefault()
 
-        const newAdmin = {
+        const adminData = {
             name: this.state.name,
             email: this.state.email,
             password: this.state.password,
@@ -37,7 +37,7 @@ class Register extends Component {
             magicPassword: this.state.magicPassword,
         }
 
-        this.props.registerAdmin(newAdmin, this.props.history)
+        this.props.registerAdmin(adminData, this.props.history)
     }
 
     componentWillReceiveProps(nextProps) {

@@ -92,8 +92,8 @@ router.post('/login', (req, res) => {
         .or([{ email: usernameOrEmail }, { username: usernameOrEmail }])
         .then(admin => {
             if (!admin) {
-                // errors.email = 'User not found';
-                return res.status(404).json({ msg: 'User not found' });
+                errors.usernameOrEmail = 'User not found';
+                return res.status(404).json(errors);
             }
 
             //Check Password
