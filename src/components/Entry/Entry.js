@@ -12,7 +12,6 @@ class Entry extends Component {
     }
 
     toggleLoginOrRegisterComponent = () => {
-        console.log('Clicked')
         this.setState({ isLogin: !this.state.isLogin })
     }
 
@@ -20,9 +19,9 @@ class Entry extends Component {
         return (
             <div>
                 {this.state.isLogin ?
-                    <Login onInputChange={this.onInputChange} toggleLoginOrRegisterComponent={this.toggleLoginOrRegisterComponent} authenticateUser={this.props.authenticateUser}/>
+                    <Login toggleLoginOrRegisterComponent={this.toggleLoginOrRegisterComponent} />
                     :
-                    <Register onInputChange={this.onInputChange} toggleLoginOrRegisterComponent={this.toggleLoginOrRegisterComponent} authenticateUser={this.props.authenticateUser}/>
+                    <Register toggleLoginOrRegisterComponent={this.toggleLoginOrRegisterComponent} />
                 }
             </div>
         )

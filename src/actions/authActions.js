@@ -1,6 +1,6 @@
 import axios from 'axios'
 import setAuthorizationToken from '../utils/setAuthToken'
-import jwt_decode from 'jwt-decode'
+import jwtDecode from 'jwt-decode'
 import { GET_ERRORS, SET_CURRENT_ADMIN } from "./types"
 
 // Register Admin    
@@ -27,7 +27,7 @@ export const loginAdmin = adminData => dispatch => {
             // Set toke to Authorization header
             setAuthorizationToken(token)
             // Decode token to get admin data
-            const decoded = jwt_decode(token)
+            const decoded = jwtDecode(token)
             // Set current admin
             dispatch(setCurrentAdmin(decoded))
         })
@@ -45,4 +45,14 @@ export const setCurrentAdmin = (decoded) => {
         type: SET_CURRENT_ADMIN,
         payload: decoded
     }
+}
+
+// Log admin out
+export const logoutAdmin = () => dispatch => {
+    // Remove token from localStorage
+    localStorage.removeItem('jwtToken')
+    // Remove auth header for future request
+    setAuthorizationToken(false)
+    // Set current admin to {} which willl set isAuthenticated to false
+    dispatch(setCurrentAdmin({}))
 }

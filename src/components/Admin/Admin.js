@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import Navbar from '../Navbar/Navbar'
 import Entry from '../Entry/Entry'
 import Dashboard from '../Dashboard/Dashboard'
@@ -16,31 +18,22 @@ class Admin extends Component {
     }
   }
 
-
-
-  authenticateUser = (event) => {
-    event.preventDefault()
-    console.log('pressed')
-
-    // console.log(this.state.usernameOrEmail.trim())
-    // console.log(this.state.password)
-
-    // let userCredentials = { 'usernameOrEmail': this.state.usernameOrEmail.trim(), 'password': this.state.password}
-    // console.log(JSON.stringify(userCredentials))
-    // console.log(userCredentials)
-    this.setState({ isAuthenticated: true })
-    console.log(this.state.isAuthenticated)
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/admin/dashboard')
+    }
+    this.setState({isAuthenticated: this.props.auth.isAuthenticated})
   }
 
-
   render() {
+    const { isAuthenticated } = this.state
     return (
       <BrowserRouter>
         <div>
-          <Navbar isAuthenticated={this.state.isAuthenticated} />
+          <Navbar isAuthenticated={isAuthenticated} />
           <div className='container'>
-            <Route path='/admin' exact strict render={() => this.state.isAuthenticated ? (<Redirect to='/admin/dashboard' />) : (<Entry authenticateUser={this.authenticateUser} />)} />
-            <Route exact path='/admin/dashboard' component={Dashboard} />
+            <Route path='/admin' strict render={() => isAuthenticated ? (<Redirect to='/admin/dashboard' />) : (<Entry />)} />
+            <Route path='/admin/dashboard' component={Dashboard} />
           </div>
         </div>
       </BrowserRouter>
@@ -48,4 +41,12 @@ class Admin extends Component {
   }
 }
 
-export default Admin
+Admin.propTypes = {
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, {})(Admin)
