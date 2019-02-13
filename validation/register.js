@@ -1,5 +1,6 @@
 const validator = require('validator')
 const isEmpty = require('./isEmpty')
+const magicPassword = require('../config/keys').magicPassword
 
 module.exports = validateRegisterInput = data => {
     let errors = {}
@@ -55,7 +56,8 @@ module.exports = validateRegisterInput = data => {
         errors.confirmPassword = 'Passwords must match'
     }
 
-    if (!validator.equals(data.magicPassword, 'crystal')) {
+    // TODO : Pass magic password fron environment variable.
+    if (!validator.equals(data.magicPassword, magicPassword)) {
         errors.magicPassword = 'Magic Password is invalid'
     }
     

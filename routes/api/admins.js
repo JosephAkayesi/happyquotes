@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const keys = require('../../config/keys')
 const passport = require('passport')
-const isEmpty = require('../../validation/isEmpty')
 
 // Load input validation
 const validateRegisterInput = require('../../validation/register')
@@ -29,11 +28,6 @@ router.post('/register', (req, res) => {
         return res.status(400).json(errors);
     }
 
-    // if(req.body.magicPassword !== 'crystal') {
-    //     console.log('Magic password invalid')
-    //     return
-    // }
-
     Admin.findOne()
         .or([{ email: req.body.email }, { username: req.body.username }])
         .then(admin => {
@@ -47,9 +41,9 @@ router.post('/register', (req, res) => {
             }
             else {
                 const avatar = gravatar.url(req.body.email, {
-                    s: '200', //Size
-                    r: 'pg', //Rating
-                    d: 'mm' //Default
+                    s: '200', // Size
+                    r: 'pg', // Rating
+                    d: 'mm' // Default
                 });
 
                 const newAdmin = new Admin({
@@ -116,17 +110,6 @@ router.post('/login', (req, res) => {
                         return res.status(400).json(errors);
                     }
                 });
-
-            // bcrypt.compare(password, admin.password)
-            //     .then(isMatch => {
-            //         if (isMatch) {
-            //             res.json({ msg: 'Success' })
-            //         }
-            //         else {
-            //             return res.status(400).json({ password: 'Password incorrect' })
-            //         }
-            //     })
-
         });
 });
 
