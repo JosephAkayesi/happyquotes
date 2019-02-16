@@ -40,7 +40,17 @@ class Register extends Component {
         this.props.registerAdmin(adminData, this.props.history)
     }
 
+    // componentWillReceiveProps(nextProps) {
+    //     if (nextProps.errors) {
+    //         this.setState({ errors: nextProps.errors })
+    //     }
+    // }
+
     componentWillReceiveProps(nextProps) {
+        if(nextProps.auth.isAuthenticated){
+            this.props.history.push('/admin/dashboard')
+        }
+
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors })
         }

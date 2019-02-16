@@ -1,11 +1,10 @@
-import React, { Component } from 'react'
-import { BrowserRouter, Route, Redirect } from "react-router-dom";
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import Navbar from '../Navbar/Navbar'
-import Entry from '../Entry/Entry'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { BrowserRouter, Redirect, Route } from "react-router-dom"
 import Dashboard from '../Dashboard/Dashboard'
-// import { BrowserRouter, Route } from 'react-router-dom'
+import Entry from '../Entry/Entry'
+import Navbar from '../Navbar/Navbar'
 
 class Admin extends Component {
   constructor() {
@@ -22,18 +21,18 @@ class Admin extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push('/admin/dashboard')
     }
-    this.setState({isAuthenticated: this.props.auth.isAuthenticated})
+    this.setState({ isAuthenticated: this.props.auth.isAuthenticated })
   }
 
   render() {
-    const { isAuthenticated } = this.state
+    const { isAuthenticated } = this.props.auth
     return (
       <BrowserRouter>
         <div>
           <Navbar isAuthenticated={isAuthenticated} />
           <div className='container'>
-            <Route path='/admin' strict render={() => isAuthenticated ? (<Redirect to='/admin/dashboard' />) : (<Entry />)} />
-            <Route path='/admin/dashboard' component={Dashboard} />
+            <Route exact path='/admin' render={() => isAuthenticated ? (<Redirect to='/admin/dashboard' />) : (<Entry />)} />
+            <Route exact path='/admin/dashboard' render={() => isAuthenticated ? (<Dashboard />) : (<Redirect to='/admin' />)} />
           </div>
         </div>
       </BrowserRouter>

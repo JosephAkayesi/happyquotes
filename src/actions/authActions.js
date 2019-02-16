@@ -6,18 +6,31 @@ import { GET_ERRORS, SET_CURRENT_ADMIN } from "./types"
 // Register Admin    
 export const registerAdmin = (adminData, history) => dispatch => {
     axios.post('/api/admins/register', adminData)
-        .then(res => history.push('/admin/dashboard'))
+        .then(res => {
+            // Save token to localStorage
+            const { token } = res.data
+            // Set token to localStorage
+            localStorage.setItem('jwtToken', token)
+            // Set toke to Authorization header
+            setAuthorizationToken(token)
+            // Decode token to get admin data
+            const decoded = jwtDecode(token)
+            // Set current admin
+            dispatch(setCurrentAdmin(decoded))
+        })
+        .then(() => history.push('/admin/dashboard'))
         .catch(err =>
             dispatch({
                 type: GET_ERRORS,
                 payload: err.response.data
             })
         )
+    console.log(history)
 }
 
 // Login - Get Admin Token
-export const loginAdmin = adminData => dispatch => {
-    console.log(adminData)
+export const loginAdmin = (adminData, history) => dispatch => {
+    console.log(history)
     axios.post('/api/admins/login', adminData)
         .then(res => {
             // Save token to localStorage
@@ -31,12 +44,14 @@ export const loginAdmin = adminData => dispatch => {
             // Set current admin
             dispatch(setCurrentAdmin(decoded))
         })
+        .then(() => history.push('/admin/dashboard'))
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,
-                payload: err.response.data
+                payload: err.response
             })
         })
+    // .catch(err => console.log(err))
 }
 
 // Set logged in admin

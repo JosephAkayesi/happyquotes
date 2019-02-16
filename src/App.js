@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import { BrowserRouter, Route } from "react-router-dom";
-import { Provider } from 'react-redux'
-import store from './store'
 import jwtDecode from 'jwt-decode'
-import setAuthorizationToken from './utils/setAuthToken'
-import Layout from "./components/Layout/Layout";
+import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+import { BrowserRouter, Route } from "react-router-dom"
+import { logoutAdmin, setCurrentAdmin } from './actions/authActions'
 import Admin from './components/Admin/Admin'
-import { setCurrentAdmin, logoutAdmin } from './actions/authActions'
-import { decode } from 'punycode';
+import Layout from "./components/Layout/Layout"
+import store from './store'
+import setAuthorizationToken from './utils/setAuthToken'
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -19,8 +18,8 @@ if (localStorage.jwtToken) {
   store.dispatch(setCurrentAdmin(decoded))
 
   // Check for expired token
-  const currentTime= Date.now() / 1000
-  if(decode.exp < currentTime){
+  const currentTime = Date.now() / 1000
+  if (decoded.exp < currentTime) {
     // Logout admin
     store.dispatch(logoutAdmin())
     // TODO: Clear current profile

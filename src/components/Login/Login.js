@@ -29,7 +29,7 @@ class Login extends Component {
             password: this.state.password
         }
 
-        this.props.loginAdmin(adminData)
+        this.props.loginAdmin(adminData, this.props.history)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -41,6 +41,7 @@ class Login extends Component {
             this.setState({ errors: nextProps.errors })
         }
     }
+    
     render() {
         const { errors } = this.state
 
