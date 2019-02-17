@@ -48,10 +48,9 @@ export const loginAdmin = (adminData, history) => dispatch => {
         .catch(err => {
             dispatch({
                 type: GET_ERRORS,
-                payload: err.response
+                payload: err.response.data
             })
         })
-    // .catch(err => console.log(err))
 }
 
 // Set logged in admin

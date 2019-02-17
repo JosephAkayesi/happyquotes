@@ -26,4 +26,5 @@ yarn-error.log*
 /.vscode
 
 #configuration
-/congig
+/config
+package.json
