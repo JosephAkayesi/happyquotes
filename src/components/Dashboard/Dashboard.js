@@ -77,9 +77,6 @@ class Dashboard extends Component {
   openQuoteDetails = (row, index) => {
     this.setState({ isModalOpen: true });
     this.setState({ index: index, author: row.author, quote: row.quote })
-    // this.setState({ index: index });
-    // this.setState({ author: row.author });
-    // this.setState({ quote: row.quote });
   }
 
   deleteQuote = (row, index) => {

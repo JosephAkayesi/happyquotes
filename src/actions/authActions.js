@@ -11,7 +11,7 @@ export const registerAdmin = (adminData, history) => dispatch => {
             const { token } = res.data
             // Set token to localStorage
             localStorage.setItem('jwtToken', token)
-            // Set toke to Authorization header
+            // Set token to Authorization header
             setAuthorizationToken(token)
             // Decode token to get admin data
             const decoded = jwtDecode(token)
@@ -30,7 +30,6 @@ export const registerAdmin = (adminData, history) => dispatch => {
 
 // Login - Get Admin Token
 export const loginAdmin = (adminData, history) => dispatch => {
-    console.log(history)
     axios.post('/api/admins/login', adminData)
         .then(res => {
             // Save token to localStorage
@@ -67,6 +66,6 @@ export const logoutAdmin = () => dispatch => {
     localStorage.removeItem('jwtToken')
     // Remove auth header for future request
     setAuthorizationToken(false)
-    // Set current admin to {} which willl set isAuthenticated to false
+    // Set current admin to {} which will set isAuthenticated to false
     dispatch(setCurrentAdmin({}))
 }

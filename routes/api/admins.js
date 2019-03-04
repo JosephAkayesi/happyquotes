@@ -17,7 +17,7 @@ const Admin = require('../../models/Admin')
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Admins route works' }))
 
-// @route   POST api/users/signup
+// @route   POST api/users/register
 // @desc    Register user
 // @access  Public
 router.post('/register', (req, res) => {

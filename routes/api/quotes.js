@@ -6,7 +6,7 @@ const passport = require('passport')
 const Quote = require('../../models/Quote')
 
 //Load Admin model
-const Admin =  require('../../models/Admin')
+const Admin = require('../../models/Admin')
 
 //Validation
 const validateQuoteInput = require('../../validation/quote')
@@ -27,6 +27,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
         return res.status(400).json(errors)
     }
 
+    console.log(req.body)
     const newQuote = new Quote({
         admin: req.user.id,
         quote: req.body.quote,
@@ -63,19 +64,65 @@ router.get('/:id', (req, res) => {
 // @access  Public
 router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
     // console.log(req.user.id)
-    Admin.findOne({admin: req.user.id})
+    Admin.findOne({ admin: req.user.id })
         .then(admin => {
             Quote.findById(req.params.id)
                 .then(quote => {
-                    if(quote.admin.toString() !== req.user.id){
-                        return res.status(401).json({notAuthorized: 'Admin not authorized'})
+                    if (quote.admin.toString() !== req.user.id) {
+                        return res.status(401).json({ notAuthorized: 'Admin not authorized' })
                     }
                     quote.remove()
-                        .then(() => res.json({success: true}))
+                        .then(() => res.json({ success: true }))
                 })
-                .catch(err => res.status(404).json({noQuoteFound: 'No quote found'}))
+                .catch(err => res.status(404).json({ noQuoteFound: 'No quote found' }))
         })
-        
+
+})
+
+// @route   PUT api/quotes/:id
+// @desc    Update quote
+// @access  Private
+router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+    const quoteFields = {};
+
+    console.log(req.body)
+    console.log(req.params)
+
+    if (req.params.id) quoteFields.id = req.params.title;
+    if (req.body.author) quoteFields.author = req.body.author;
+    if (req.body.quote) quoteFields.quote = req.body.quote;
+    quoteFields.lastModified = Date.now()
+
+    console.log(quoteFields.dateModified)
+
+    Admin.findOne({ admin: req.user.id })
+        .then(admin => {
+            Quote.findById(req.params.id)
+                .then(quote => {
+                    if (quote.admin.toString() !== req.user.id) {
+                        return res.status(401).json({ notAuthorized: 'Admin not authorized' })
+                    }
+                    Quote.findOneAndUpdate({ _id: req.params.id }, { $set: quoteFields }, { new: true })
+                        .then(quote => res.json(quote))
+                        .catch(err => res.json.err)
+                })
+        })
+})
+
+router.put('/update', (req, res) => {
+    //Get Book Fields
+    const bookFields = {};
+
+    console.log(req.body)
+
+    if (req.body.id) bookFields.id = req.body.title;
+    if (req.body.title) bookFields.title = req.body.title;
+    if (req.body.author) bookFields.author = req.body.author;
+    if (req.body.isbn) bookFields.isbn = req.body.isbn;
+
+    Book.findOneAndUpdate({ _id: req.body.id }, { $set: bookFields }, { new: true })
+        .then(book => res.json(book))
+        .catch(err => res.json(err))
 })
 
 module.exports = router;
