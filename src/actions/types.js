@@ -1,2 +1,6 @@
 export const GET_ERRORS = 'GET_ERRORS'
 export const SET_CURRENT_ADMIN = 'SET_CURRENT_ADMIN'
+export const QUOTE_LOADING = 'QUOTE_LOADING'
+export const GET_QUOTES = 'GET_QUOTES'
+export const ADD_QUOTE = 'ADD_QUOTE'
+export const DELETE_QUOTE = 'DELETE_QUOTE'

@@ -17,7 +17,7 @@ const validateQuoteInput = require('../../validation/quote')
 router.get('/test', (req, res) => res.json({ msg: 'Quotes route works' }))
 
 // @route   POST api/quotes
-// @desc    Create quotes
+// @desc    Create quote
 // @access  Private
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
     const { errors, isValid } = validateQuoteInput(req.body)
@@ -45,6 +45,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 // @access  Public
 router.get('/', (req, res) => {
     Quote.find()
+        .populate('admin','name')
         .sort({ dateAdded: -1 })
         .then(quotes => res.json(quotes))
         .catch(err => res.status(404).json({ noQuotesFound: 'No Quote found with that Id' }))

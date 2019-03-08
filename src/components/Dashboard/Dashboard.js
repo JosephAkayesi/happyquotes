@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { addQuote, getQuotes } from '../../actions/quoteActions'
 import Modal from '../Modal/Modal'
+import Spinner from '../Spinner/Spinner'
 import add from '../../images/add.png'
 import addSelected from '../../images/addSelected.png'
 import './Dashboard.css'
@@ -7,7 +11,7 @@ import './Dashboard.css'
 const TableRow = ({ row, openQuoteDetails, deleteQuote }) => (
   <tr>
     <th scope="row" onClick={openQuoteDetails}>{row.author}</th>
-    <td onClick={openQuoteDetails}>{row.quote}<small id="admin" className="form-text text-muted">{row.admin}</small></td>
+    <td onClick={openQuoteDetails}>{row.quote}<small id="admin" className="form-text text-muted">{row.admin.name}</small></td>
     <td><i className="fa fa-close" onClick={deleteQuote}></i></td>
   </tr>
 )
@@ -34,28 +38,14 @@ class Dashboard extends Component {
     super()
 
     this.state = {
-      quotes: [
-        {
-          "quote": "Our industry does not respect tradition - it only respects innovation.",
-          "author": "Satya Nadella",
-          "admin": "Joseph Akayesi"
-        },
-        {
-          "quote": "Engineering is the closest thing to magic that exists in the world.",
-          "author": "Elon Musk",
-          "admin": "Joseph Akayesi"
-        },
-        {
-          "quote": "For me, it matters that we drive technology as an equalizing force, as an enabler for everyone around the world.",
-          "author": "Sundar Pichai",
-          "admin": "Yasmin Adams"
-        }
-      ],
+      quotes: [],
       addSource: add,
       isModalOpen: false,
+      loading: false,
       index: '',
       author: '',
-      quote: ''
+      quote: '',
+      errors: {}
     }
   }
 
@@ -68,15 +58,35 @@ class Dashboard extends Component {
   }
 
   toggleModalOpenOrClose = () => {
+    // this.setState({ index: '' })
+    // this.setState({ author: '' })
+    // this.setState({ quote: '' })
+    this.resetQuoteStateToEmpty()
     this.setState({ isModalOpen: !this.state.isModalOpen })
-    this.setState({ index: '' })
-    this.setState({ author: '' })
-    this.setState({ quote: '' })
   }
 
   openQuoteDetails = (row, index) => {
     this.setState({ isModalOpen: true });
     this.setState({ index: index, author: row.author, quote: row.quote })
+  }
+
+  addNewQuote = () => {
+    console.log('add new')
+    const { user } = this.props.auth
+
+    const newQuote = {
+      admin: user.id,
+      quote: this.state.quote,
+      author: this.state.author,
+    }
+
+    this.props.addQuote(newQuote)
+  }
+
+  updateExistingQuote = () => {
+    console.log('Update Existing')
+    this.setState({ errors: {} })
+    console.log('empty')
   }
 
   deleteQuote = (row, index) => {
@@ -85,54 +95,72 @@ class Dashboard extends Component {
     console.log(this.state.quotes.splice(index, 1))
   }
 
-
-  addNewQuote = () => {
-    let quote = {
-      "quote": this.state.quote,
-      "author": this.state.author,
-    }
-    console.log('Add New')
-    let quotes = this.state.quotes.concat(quote)
-    this.setState({ quotes: quotes })
-  }
-
-  updateExistingQuote = (index) => {
-    console.log('Update Existing')
-    console.log(this.state.quotes[this.state.index])
-
-    let copyOfQuotesState = this.state.quotes
-
-    copyOfQuotesState[this.state.index].quote = this.state.quote
-    copyOfQuotesState[this.state.index].author = this.state.author
-    this.setState({ quotes: copyOfQuotesState })
-  }
-
   onInputChange = (event) => {
     this.setState({ [event.target.id]: event.target.value })
   }
 
+  resetQuoteStateToEmpty = () => {
+    this.setState({ index: '' })
+    this.setState({ author: '' })
+    this.setState({ quote: '' })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('receive props')
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors })
+    }
+  }
+
+  componentDidMount() {
+    this.props.getQuotes()
+  }
+
   render() {
+    const { quotes, loading } = this.props.quote
+
     return (
+
       <div className='pt-3'>
-        <Table
-          data={this.state.quotes}
-          openQuoteDetails={this.openQuoteDetails}
-          deleteQuote={this.deleteQuote} />
-        <div className='text-center align-items-center justify-content-centerpt-5'>
-          <a href='#add' onClick={this.toggleModalOpenOrClose}>
-            <img src={this.state.addSource} className='addButton mx-1' alt="add" onMouseOver={this.onAddMouseOver} onMouseOut={this.onAddMouseOut} />
-          </a>
-        </div>
-        <Modal
-          isModalOpen={this.state.isModalOpen}
-          toggleModalOpenOrClose={this.toggleModalOpenOrClose}
-          state={this.state}
-          onInputChange={this.onInputChange}
-          addNewQuote={this.addNewQuote}
-          updateExistingQuote={this.updateExistingQuote} />
+        {loading ? <Spinner /> :
+          <div>
+            <Table
+              data={quotes}
+              openQuoteDetails={this.openQuoteDetails}
+              deleteQuote={this.deleteQuote} />
+            <div className='text-center align-items-center justify-content-centerpt-5'>
+              <a href='#add' onClick={this.toggleModalOpenOrClose}>
+                <img src={this.state.addSource} className='addButton mx-1' alt="add" onMouseOver={this.onAddMouseOver} onMouseOut={this.onAddMouseOut} />
+              </a>
+            </div>
+            <Modal
+              isModalOpen={this.state.isModalOpen}
+              toggleModalOpenOrClose={this.toggleModalOpenOrClose}
+              data={this.state}
+              onInputChange={this.onInputChange}
+              addNewQuote={this.addNewQuote}
+              updateExistingQuote={this.updateExistingQuote}
+            />
+          </div>
+        }
       </div>
     )
   }
 }
 
-export default Dashboard
+Dashboard.propTypes = {
+  addQuote: PropTypes.func.isRequired,
+  getQuotes: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  quote: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  quote: state.quote,
+  errors: state.errors
+})
+
+export default connect(mapStateToProps, { addQuote, getQuotes })(Dashboard)
+
