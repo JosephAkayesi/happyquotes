@@ -1,9 +1,10 @@
-import { ADD_QUOTE, GET_QUOTES, QUOTE_LOADING } from '../actions/types'
+import { ADD_QUOTE, GET_QUOTES, QUOTE_LOADING, TOGGLE_MODAL } from '../actions/types'
 
 const initialState = {
     quotes: [],
     quote: {},
-    loading: false
+    loading: false,
+    isModalOpen: false,
 }
 
 export default function (state = initialState, action) {
@@ -23,6 +24,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 quotes: [action.payload, ...state.quotes]
+            }
+        case TOGGLE_MODAL:
+            return {
+                ...state,
+                isModalOpen: !state.isModalOpen
             }
         default:
             return state

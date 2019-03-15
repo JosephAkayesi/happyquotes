@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ADD_QUOTE, GET_ERRORS, GET_QUOTES, QUOTE_LOADING } from './types'
+import { ADD_QUOTE, GET_ERRORS, GET_QUOTES, QUOTE_LOADING, CLEAR_ERRORS, TOGGLE_MODAL } from './types'
 
 // Add Quote
 export const addQuote = quoteData => dispatch => {
@@ -41,4 +41,18 @@ export const setQuoteLoading = () => {
     return {
         type: QUOTE_LOADING
     }
+}
+
+// Clear errors from Quote modal
+export const clearErrors = () => dispatch => {
+    dispatch({
+        type: CLEAR_ERRORS,
+    })
+}
+
+// Toggle quote modal
+export const toggleModalOpenOrClose = () => dispatch => {
+    dispatch({
+        type: TOGGLE_MODAL,
+    })
 }

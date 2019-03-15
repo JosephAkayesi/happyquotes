@@ -27,7 +27,6 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
         return res.status(400).json(errors)
     }
 
-    console.log(req.body)
     const newQuote = new Quote({
         admin: req.user.id,
         quote: req.body.quote,
@@ -36,8 +35,12 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
         lastModified: Date.now()
     })
 
-    console.warn(newQuote)
-    newQuote.save().then(post => res.json(post))
+    newQuote.save()
+        .then(quote => {
+            Quote.findById(quote._id)
+                .populate('admin', 'name')
+                .then(quote => res.json(quote))
+        })
 })
 
 // @route   GET api/quotes
@@ -48,7 +51,7 @@ router.get('/', (req, res) => {
         .populate('admin','name')
         .sort({ dateAdded: -1 })
         .then(quotes => res.json(quotes))
-        .catch(err => res.status(404).json({ noQuotesFound: 'No Quote found with that Id' }))
+        .catch(() => res.status(404).json({ noQuotesFound: 'No Quote found with that Id' }))
 })
 
 // @route   GET api/quotes/:id
@@ -108,22 +111,6 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
                         .catch(err => res.json.err)
                 })
         })
-})
-
-router.put('/update', (req, res) => {
-    //Get Book Fields
-    const bookFields = {};
-
-    console.log(req.body)
-
-    if (req.body.id) bookFields.id = req.body.title;
-    if (req.body.title) bookFields.title = req.body.title;
-    if (req.body.author) bookFields.author = req.body.author;
-    if (req.body.isbn) bookFields.isbn = req.body.isbn;
-
-    Book.findOneAndUpdate({ _id: req.body.id }, { $set: bookFields }, { new: true })
-        .then(book => res.json(book))
-        .catch(err => res.json(err))
 })
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { addQuote, getQuotes } from '../../actions/quoteActions'
+import { addQuote, getQuotes, clearErrors, toggleModalOpenOrClose } from '../../actions/quoteActions'
 import Modal from '../Modal/Modal'
 import Spinner from '../Spinner/Spinner'
 import add from '../../images/add.png'
@@ -62,11 +62,14 @@ class Dashboard extends Component {
     // this.setState({ author: '' })
     // this.setState({ quote: '' })
     this.resetQuoteStateToEmpty()
-    this.setState({ isModalOpen: !this.state.isModalOpen })
+    // this.setState({ isModalOpen: !this.state.isModalOpen })
+    this.props.toggleModalOpenOrClose()
+    this.props.clearErrors()
   }
 
   openQuoteDetails = (row, index) => {
-    this.setState({ isModalOpen: true });
+    // this.setState({ isModalOpen: true });
+    this.props.toggleModalOpenOrClose()
     this.setState({ index: index, author: row.author, quote: row.quote })
   }
 
@@ -109,6 +112,7 @@ class Dashboard extends Component {
     console.log('receive props')
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors })
+      this.setState({isModalOpen: nextProps.quote.isModalOpen})
     }
   }
 
@@ -128,11 +132,12 @@ class Dashboard extends Component {
               data={quotes}
               openQuoteDetails={this.openQuoteDetails}
               deleteQuote={this.deleteQuote} />
-            <div className='text-center align-items-center justify-content-centerpt-5'>
+              {/* Add image button will be removed since Add Quote functionality has been sent to the navbar */}
+            {/* <div className='text-center align-items-center justify-content-centerpt-5'>
               <a href='#add' onClick={this.toggleModalOpenOrClose}>
                 <img src={this.state.addSource} className='addButton mx-1' alt="add" onMouseOver={this.onAddMouseOver} onMouseOut={this.onAddMouseOut} />
               </a>
-            </div>
+            </div> */}
             <Modal
               isModalOpen={this.state.isModalOpen}
               toggleModalOpenOrClose={this.toggleModalOpenOrClose}
@@ -151,6 +156,7 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   addQuote: PropTypes.func.isRequired,
   getQuotes: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   quote: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -162,5 +168,5 @@ const mapStateToProps = state => ({
   errors: state.errors
 })
 
-export default connect(mapStateToProps, { addQuote, getQuotes })(Dashboard)
+export default connect(mapStateToProps, { addQuote, getQuotes, clearErrors, toggleModalOpenOrClose })(Dashboard)
 
