@@ -10,12 +10,11 @@ class Add extends Component {
       }
 
       componentWillReceiveProps(nextProps) {
-        console.log('Add receive props')
         if (nextProps.errors) {
           this.setState({isModalOpen: nextProps.quote.isModalOpen})
-          console.log(nextProps.quote.isModalOpen)
         }
       }
+      
     render() {
         return (
             <ul className="navbar-nav ml-auto px-4">

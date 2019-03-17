@@ -9,12 +9,11 @@ import './Layout.css'
 class Layout extends Component {
     componentDidMount() {
         this.props.getQuotes()
-        // this.setFirstQuote()
     }
 
     render() {
         const { quotes } = this.props.quote
-        
+
         return (
             <div className='bgImg'>
                 <div className='centered text-center align-items-center justify-content-center'>

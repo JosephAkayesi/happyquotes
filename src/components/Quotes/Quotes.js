@@ -29,7 +29,6 @@ class Quotes extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('receiver props')
         if (nextProps.quotes) {
             this.setState({ quotes: nextProps.quotes })
         }

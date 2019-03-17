@@ -6,7 +6,6 @@ class Modal extends Component {
     constructor(props) {
         super(props)
 
-
         this.state = {
             id: '',
             author: '',
@@ -20,7 +19,6 @@ class Modal extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('receive props')
         this.setState({errors: {}})
         if (nextProps.errors) {
             this.setState({ errors: nextProps.errors })

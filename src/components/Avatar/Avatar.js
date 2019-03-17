@@ -3,7 +3,6 @@ import classnames from 'classnames'
 
 class Avatar extends Component {
     render() {
-        // const showOrHideAvatar = this.props.isAuthenticated ? 'dropdown show d-block' : 'dropdown show d-none'
         return (
             <div className={classnames('dropdown show', { 'd-block': this.props.isAuthenticated })}>
                 <img className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ height: '40px', width: '40px', borderRadius: '100%', verticalAlign: 'middle' }} src={this.props.user.avatar} alt="avatar" title='Default avatar is your Gravatar' />

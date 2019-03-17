@@ -10,7 +10,6 @@ class Navbar extends Component {
     
     onLogoutClick = event => {
         event.preventDefault()
-        console.log('Admin logged out')
         this.props.logoutAdmin()
     }
 
