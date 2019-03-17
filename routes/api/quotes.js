@@ -48,7 +48,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 // @access  Public
 router.get('/', (req, res) => {
     Quote.find()
-        .populate('admin','name')
+        .populate('admin', 'name')
         .sort({ dateAdded: -1 })
         .then(quotes => res.json(quotes))
         .catch(() => res.status(404).json({ noQuotesFound: 'No Quote found with that Id' }))
@@ -76,7 +76,7 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, re
                         return res.status(401).json({ notAuthorized: 'Admin not authorized' })
                     }
                     quote.remove()
-                        .then(() => res.json({ success: true }))
+                        .then(quote => res.json(quote))
                 })
                 .catch(err => res.status(404).json({ noQuoteFound: 'No quote found' }))
         })
@@ -107,6 +107,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
                         return res.status(401).json({ notAuthorized: 'Admin not authorized' })
                     }
                     Quote.findOneAndUpdate({ _id: req.params.id }, { $set: quoteFields }, { new: true })
+                        .populate('admin', 'name')
                         .then(quote => res.json(quote))
                         .catch(err => res.json.err)
                 })

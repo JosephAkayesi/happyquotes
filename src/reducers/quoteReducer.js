@@ -1,4 +1,6 @@
-import { ADD_QUOTE, EDIT_QUOTE, GET_QUOTES, QUOTE_LOADING, TOGGLE_MODAL } from '../actions/types'
+import {  GET_QUOTES, ADD_QUOTE, EDIT_QUOTE, DELETE_QUOTE, QUOTE_LOADING, TOGGLE_MODAL } from '../actions/types'
+
+const util = require('util');
 
 const initialState = {
     quotes: [],
@@ -29,6 +31,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 quotes: [action.payload, ...state.quotes.filter(quote => quote._id !== action.payload._id)]
+            }
+        case DELETE_QUOTE: 
+            console.log(`%c ${util.inspect(action.payload)} `, 'background: #222; color: #bada55');
+            return {
+                ...state,
+                quotes: [...state.quotes.filter(quote => quote._id !== action.payload._id )]
             }
         case TOGGLE_MODAL:
             return {

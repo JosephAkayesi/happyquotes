@@ -1,5 +1,23 @@
 import axios from 'axios'
-import { ADD_QUOTE, EDIT_QUOTE, GET_ERRORS, GET_QUOTES, QUOTE_LOADING, CLEAR_ERRORS, TOGGLE_MODAL } from './types'
+import { GET_QUOTES, ADD_QUOTE, EDIT_QUOTE, DELETE_QUOTE, GET_ERRORS, QUOTE_LOADING, CLEAR_ERRORS, TOGGLE_MODAL } from './types'
+
+// Get Quotes
+export const getQuotes = () => dispatch => {
+    dispatch(setQuoteLoading())
+    axios.get('/api/quotes')
+        .then(res =>
+            dispatch({
+                type: GET_QUOTES,
+                payload: res.data
+            })
+        )
+        .catch(err =>
+            dispatch({
+                type: GET_QUOTES,
+                payload: null
+            })
+        )
+}
 
 // Add Quote
 export const addQuote = quoteData => dispatch => {
@@ -30,22 +48,15 @@ export const editQuote = quoteData => dispatch => {
         })
 }
 
-// Get Quotes
-export const getQuotes = () => dispatch => {
-    dispatch(setQuoteLoading())
-    axios.get('/api/quotes')
-        .then(res =>
+// Delete Quote
+export const deleteQuote = quoteID => dispatch => {
+    axios.delete(`/api/quotes/${quoteID}`)
+        .then(res => {
             dispatch({
-                type: GET_QUOTES,
+                type: DELETE_QUOTE,
                 payload: res.data
             })
-        )
-        .catch(err =>
-            dispatch({
-                type: GET_QUOTES,
-                payload: null
-            })
-        )
+        })
 }
 
 // Set Quotes Loading State

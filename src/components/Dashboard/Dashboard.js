@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { addQuote, editQuote, getQuotes, clearErrors, toggleModalOpenOrClose } from '../../actions/quoteActions'
+import { getQuotes, addQuote, editQuote, deleteQuote, clearErrors, toggleModalOpenOrClose } from '../../actions/quoteActions'
 import Modal from '../Modal/Modal'
 import Spinner from '../Spinner/Spinner'
 import add from '../../images/add.png'
@@ -107,6 +107,9 @@ class Dashboard extends Component {
     console.log('Row deleted')
     // console.log(this.state.quotes.splice(index, 1))
     console.log(row)
+    const quoteID = row._id
+    console.log(quoteID)
+    this.props.deleteQuote(quoteID)
   }
 
   onInputChange = (event) => {
@@ -165,9 +168,10 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
+  getQuotes: PropTypes.func.isRequired,
   addQuote: PropTypes.func.isRequired,
   editQuote: PropTypes.func.isRequired,
-  getQuotes: PropTypes.func.isRequired,
+  deleteQuote: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   quote: PropTypes.object.isRequired,
@@ -180,5 +184,5 @@ const mapStateToProps = state => ({
   errors: state.errors
 })
 
-export default connect(mapStateToProps, { addQuote, editQuote, getQuotes, clearErrors, toggleModalOpenOrClose })(Dashboard)
+export default connect(mapStateToProps, { getQuotes, addQuote, editQuote, deleteQuote, clearErrors, toggleModalOpenOrClose })(Dashboard)
 
