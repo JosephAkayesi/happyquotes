@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { addQuote, getQuotes, clearErrors, toggleModalOpenOrClose } from '../../actions/quoteActions'
+import { addQuote, editQuote, getQuotes, clearErrors, toggleModalOpenOrClose } from '../../actions/quoteActions'
 import Modal from '../Modal/Modal'
 import Spinner from '../Spinner/Spinner'
 import add from '../../images/add.png'
@@ -26,8 +26,8 @@ const Table = ({ data, openQuoteDetails, deleteQuote }) => (
       </tr>
     </thead>
     <tbody>
-      {data.map((row, index) =>
-        <TableRow key={index} row={row} openQuoteDetails={() => openQuoteDetails(row, index)} deleteQuote={() => deleteQuote(row, index)} />
+      {data.map((row) =>
+        <TableRow key={row._id} row={row} openQuoteDetails={() => openQuoteDetails(row)} deleteQuote={() => deleteQuote(row)} />
       )}
     </tbody>
   </table>
@@ -67,10 +67,11 @@ class Dashboard extends Component {
     this.props.clearErrors()
   }
 
-  openQuoteDetails = (row, index) => {
+  openQuoteDetails = (row) => {
     // this.setState({ isModalOpen: true });
+    // console.log(row)
     this.props.toggleModalOpenOrClose()
-    this.setState({ index: index, author: row.author, quote: row.quote })
+    this.setState({ index: row._id, author: row.author, quote: row.quote })
   }
 
   addNewQuote = () => {
@@ -86,16 +87,26 @@ class Dashboard extends Component {
     this.props.addQuote(newQuote)
   }
 
-  updateExistingQuote = () => {
+  updateExistingQuote = (row) => {
     console.log('Update Existing')
     this.setState({ errors: {} })
-    console.log('empty')
+    console.log(row)
+
+    const quoteData = {
+      index: this.state.index,
+      quote: this.state.quote,
+      author: this.state.author
+    }
+    console.log(quoteData)
+
+    this.props.editQuote(quoteData)
   }
 
-  deleteQuote = (row, index) => {
+  deleteQuote = (row) => {
     this.setState({ isModalOpen: false })
     console.log('Row deleted')
-    console.log(this.state.quotes.splice(index, 1))
+    // console.log(this.state.quotes.splice(index, 1))
+    console.log(row)
   }
 
   onInputChange = (event) => {
@@ -112,7 +123,7 @@ class Dashboard extends Component {
     console.log('receive props')
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors })
-      this.setState({isModalOpen: nextProps.quote.isModalOpen})
+      this.setState({ isModalOpen: nextProps.quote.isModalOpen })
     }
   }
 
@@ -132,7 +143,7 @@ class Dashboard extends Component {
               data={quotes}
               openQuoteDetails={this.openQuoteDetails}
               deleteQuote={this.deleteQuote} />
-              {/* Add image button will be removed since Add Quote functionality has been sent to the navbar */}
+            {/* Add image button will be removed since Add Quote functionality has been sent to the navbar */}
             {/* <div className='text-center align-items-center justify-content-centerpt-5'>
               <a href='#add' onClick={this.toggleModalOpenOrClose}>
                 <img src={this.state.addSource} className='addButton mx-1' alt="add" onMouseOver={this.onAddMouseOver} onMouseOut={this.onAddMouseOut} />
@@ -155,6 +166,7 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   addQuote: PropTypes.func.isRequired,
+  editQuote: PropTypes.func.isRequired,
   getQuotes: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
@@ -168,5 +180,5 @@ const mapStateToProps = state => ({
   errors: state.errors
 })
 
-export default connect(mapStateToProps, { addQuote, getQuotes, clearErrors, toggleModalOpenOrClose })(Dashboard)
+export default connect(mapStateToProps, { addQuote, editQuote, getQuotes, clearErrors, toggleModalOpenOrClose })(Dashboard)
 

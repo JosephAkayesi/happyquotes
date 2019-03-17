@@ -1,4 +1,4 @@
-import { ADD_QUOTE, GET_QUOTES, QUOTE_LOADING, TOGGLE_MODAL } from '../actions/types'
+import { ADD_QUOTE, EDIT_QUOTE, GET_QUOTES, QUOTE_LOADING, TOGGLE_MODAL } from '../actions/types'
 
 const initialState = {
     quotes: [],
@@ -24,6 +24,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 quotes: [action.payload, ...state.quotes]
+            }
+        case EDIT_QUOTE:
+            return {
+                ...state,
+                quotes: [action.payload, ...state.quotes.filter(quote => quote._id !== action.payload._id)]
             }
         case TOGGLE_MODAL:
             return {

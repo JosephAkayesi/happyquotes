@@ -100,7 +100,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), (req, res) 
     console.log(quoteFields.dateModified)
 
     Admin.findOne({ admin: req.user.id })
-        .then(admin => {
+        .then(() => {
             Quote.findById(req.params.id)
                 .then(quote => {
                     if (quote.admin.toString() !== req.user.id) {

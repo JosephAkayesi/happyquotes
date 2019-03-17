@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ADD_QUOTE, GET_ERRORS, GET_QUOTES, QUOTE_LOADING, CLEAR_ERRORS, TOGGLE_MODAL } from './types'
+import { ADD_QUOTE, EDIT_QUOTE, GET_ERRORS, GET_QUOTES, QUOTE_LOADING, CLEAR_ERRORS, TOGGLE_MODAL } from './types'
 
 // Add Quote
 export const addQuote = quoteData => dispatch => {
@@ -16,6 +16,18 @@ export const addQuote = quoteData => dispatch => {
                 payload: err.response.data
             })
         )
+}
+
+// Edit Quote
+export const editQuote = quoteData => dispatch => {
+    console.log(quoteData)
+    axios.put(`/api/quotes/${quoteData.index}`, quoteData)
+        .then(res => {
+            dispatch({
+                type: EDIT_QUOTE,
+                payload: res.data
+            })
+        })
 }
 
 // Get Quotes
