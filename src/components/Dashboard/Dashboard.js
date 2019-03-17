@@ -8,15 +8,15 @@ import add from '../../images/add.png'
 import addSelected from '../../images/addSelected.png'
 import './Dashboard.css'
 
-const TableRow = ({ row, openQuoteDetails, deleteQuote }) => (
+const TableRow = ({ row, openQuoteDetails, deleteQuote, admin }) => (
   <tr>
     <th scope="row" onClick={openQuoteDetails}>{row.author}</th>
     <td onClick={openQuoteDetails}>{row.quote}<small id="admin" className="form-text text-muted">{row.admin.name}</small></td>
-    <td><i className="fa fa-close" onClick={deleteQuote}></i></td>
+    <td>{row.admin._id === admin ? <i className="fa fa-close" onClick={deleteQuote}></i> : ''}</td>
   </tr>
 )
 
-const Table = ({ data, openQuoteDetails, deleteQuote }) => (
+const Table = ({ data, openQuoteDetails, deleteQuote, admin }) => (
   <table className="table table-hover">
     <thead>
       <tr className="table-active">
@@ -27,7 +27,7 @@ const Table = ({ data, openQuoteDetails, deleteQuote }) => (
     </thead>
     <tbody>
       {data.map((row) =>
-        <TableRow key={row._id} row={row} openQuoteDetails={() => openQuoteDetails(row)} deleteQuote={() => deleteQuote(row)} />
+        <TableRow key={row._id} row={row} admin={admin} openQuoteDetails={() => openQuoteDetails(row)} deleteQuote={() => deleteQuote(row)} />
       )}
     </tbody>
   </table>
@@ -58,24 +58,17 @@ class Dashboard extends Component {
   }
 
   toggleModalOpenOrClose = () => {
-    // this.setState({ index: '' })
-    // this.setState({ author: '' })
-    // this.setState({ quote: '' })
     this.resetQuoteStateToEmpty()
-    // this.setState({ isModalOpen: !this.state.isModalOpen })
     this.props.toggleModalOpenOrClose()
     this.props.clearErrors()
   }
 
   openQuoteDetails = (row) => {
-    // this.setState({ isModalOpen: true });
-    // console.log(row)
     this.props.toggleModalOpenOrClose()
     this.setState({ index: row._id, author: row.author, quote: row.quote })
   }
 
   addNewQuote = () => {
-    console.log('add new')
     const { user } = this.props.auth
 
     const newQuote = {
@@ -87,28 +80,21 @@ class Dashboard extends Component {
     this.props.addQuote(newQuote)
   }
 
-  updateExistingQuote = (row) => {
-    console.log('Update Existing')
+  updateExistingQuote = () => {
     this.setState({ errors: {} })
-    console.log(row)
 
     const quoteData = {
       index: this.state.index,
       quote: this.state.quote,
       author: this.state.author
     }
-    console.log(quoteData)
 
     this.props.editQuote(quoteData)
   }
 
   deleteQuote = (row) => {
     this.setState({ isModalOpen: false })
-    console.log('Row deleted')
-    // console.log(this.state.quotes.splice(index, 1))
-    console.log(row)
     const quoteID = row._id
-    console.log(quoteID)
     this.props.deleteQuote(quoteID)
   }
 
@@ -123,7 +109,6 @@ class Dashboard extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('receive props')
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors })
       this.setState({ isModalOpen: nextProps.quote.isModalOpen })
@@ -136,22 +121,17 @@ class Dashboard extends Component {
 
   render() {
     const { quotes, loading } = this.props.quote
+    const { user } = this.props.auth
 
     return (
-
       <div className='pt-3'>
         {loading ? <Spinner /> :
           <div>
             <Table
               data={quotes}
+              admin={user.id}
               openQuoteDetails={this.openQuoteDetails}
               deleteQuote={this.deleteQuote} />
-            {/* Add image button will be removed since Add Quote functionality has been sent to the navbar */}
-            {/* <div className='text-center align-items-center justify-content-centerpt-5'>
-              <a href='#add' onClick={this.toggleModalOpenOrClose}>
-                <img src={this.state.addSource} className='addButton mx-1' alt="add" onMouseOver={this.onAddMouseOver} onMouseOut={this.onAddMouseOut} />
-              </a>
-            </div> */}
             <Modal
               isModalOpen={this.state.isModalOpen}
               toggleModalOpenOrClose={this.toggleModalOpenOrClose}
