@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import classnames from 'classnames'
 
 class Avatar extends Component {
@@ -12,7 +13,7 @@ class Avatar extends Component {
                         <small className="block text-muted">@{this.props.user.username}</small>
                     </a>
                     <div className="dropdown-divider"></div>
-                    <a className="dropdown-item" href="#logout">Settings</a>
+                    <Link to="/admin/profile" className="dropdown-item" href="#logout">Profile</Link>
                     <div className="dropdown-divider"></div>
                     <a className="dropdown-item" href='#logout' onClick={this.props.onLogoutClick}>Logout</a>
                 </div>

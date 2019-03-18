@@ -7,14 +7,14 @@ import { toggleModalOpenOrClose } from '../../actions/quoteActions'
 class Add extends Component {
     toggleModalOpenOrClose = () => {
         this.props.toggleModalOpenOrClose()
-      }
+    }
 
-      componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
-          this.setState({isModalOpen: nextProps.quote.isModalOpen})
+            this.setState({ isModalOpen: nextProps.quote.isModalOpen })
         }
-      }
-      
+    }
+
     render() {
         return (
             <ul className="navbar-nav ml-auto px-4">
