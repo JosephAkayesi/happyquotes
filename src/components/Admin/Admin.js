@@ -26,7 +26,7 @@ class Admin extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props.auth
+    const { isAuthenticated, user } = this.props.auth
     return (
       <BrowserRouter>
         <div>
@@ -34,7 +34,7 @@ class Admin extends Component {
           <div className='container'>
             <Route exact path='/admin' render={() => isAuthenticated ? (<Redirect to='/admin/dashboard' />) : (<Entry />)} />
             <Route exact path='/admin/dashboard' render={() => isAuthenticated ? (<Dashboard />) : (<Redirect to='/admin' />)} />
-            <Route exact path='/admin/profile' render={() => isAuthenticated ? (<Profile/>) : (<Redirect to='/admin' />)} />
+            <Route exact path='/admin/profile' render={() => isAuthenticated ? (<Profile user={user} />) : (<Redirect to='/admin' />)} />
           </div>
         </div>
       </BrowserRouter>

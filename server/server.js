@@ -1,9 +1,11 @@
 const app = require('express')()
+const keys = require('../config/keys')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const cors = require('cors')
 const helmet = require('helmet')
+const cloudinary = require('cloudinary');
 const admins = require('../routes/api/admins')
 const quotes = require('../routes/api/quotes')
 
@@ -11,14 +13,17 @@ const quotes = require('../routes/api/quotes')
 app.use(cors())
 
 // Body Parser Middleware
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ limit: '60mb', extended: false }))
+app.use(bodyParser.json({limit: '60mb', extended: false}))
 
 // Helmet middleware
 app.use(helmet())
 
 // Db Config
 const db = require('../config/keys').mongoURI;
+
+//Cloudinary Config
+cloudinary.config({ cloud_name: keys.cloudName, api_key: keys.apiKey, api_secret: keys.apiSecret })
 
 // Connect to MongoDb
 mongoose.connect(db, { useNewUrlParser: true })

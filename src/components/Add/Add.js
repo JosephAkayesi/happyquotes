@@ -28,7 +28,7 @@ class Add extends Component {
 
 Add.propTypes = {
     toggleModalOpenOrClose: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
+    // auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({

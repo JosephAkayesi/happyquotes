@@ -25,7 +25,7 @@ class Navbar extends Component {
                     <div className="collapse navbar-collapse" id="navbarColor02">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <Link to="/admin/dashboard" className="nav-link" href="#">Home</Link>
+                                {isAuthenticated ? <Link to="/admin/dashboard" className="nav-link" href="#">Home</Link> : ''}
                             </li>
                         </ul>
                     </div>

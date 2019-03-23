@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const keys = require('../../config/keys')
 const passport = require('passport')
+const cloudinary = require('cloudinary')
 
 // Load input validation
 const validateRegisterInput = require('../../validation/register')
@@ -160,4 +161,21 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
     })
 })
 
+// @route   POST api/admins/upload
+// @desc    Upload admin avatar
+// @access  Private
+router.post('/upload', passport.authenticate('jwt', { session: false }), (req, res) => {
+    // console.log(req.body.image)
+    cloudinary.v2.uploader.upload(req.body.image, { width: 200, height: 200, crop: 'limit', tags: req.body.tages, moderation: 'manual' })
+        .then(image => res.json(image))
+        .catch(err => res.json(err))
+})
+
+
+// app.post("/uploads", upload.single("image"), async (req, res) => {
+//     const result = await cloudinary.v2.uploader.upload(req.file.path, {
+//       width: 300, height: 300, crop: "limit", tags: req.body.tags, moderation: 'manual'
+//     })
+//     res.redirect("/");
+//   });
 module.exports = router;
