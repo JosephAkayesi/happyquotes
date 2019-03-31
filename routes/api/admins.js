@@ -149,6 +149,31 @@ router.post('/login', (req, res) => {
         });
 });
 
+// @route   PUT api/admins
+// @desc    Update admin profile
+// @access  Private
+router.put('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+    const profileFields = {}
+
+    if(req.body.name) profileFields.name = req.body.name
+    if(req.body.username) profileFields.username = req.body.username 
+    if(req.body.image) profileFields.avatar = req.body.image 
+
+    Admin.findOneAndUpdate({_id : req.user.id}, {$set: profileFields}, {new: true})
+        .then(admin => {
+            const payload = { id: admin.id, name: admin.name, username: admin.username, avatar: admin.avatar }; //Create JWT Payload
+
+            //Sign Token
+            jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+                res.json({
+                    success: true,
+                    token: `Bearer ${token}`
+                });
+            });
+        })
+        .catch(err => res.json(err))
+})
+
 // @route   GET api/admins/current
 // @desc    Return current admin
 // @access  Private
@@ -165,17 +190,18 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
 // @desc    Upload admin avatar
 // @access  Private
 router.post('/upload', passport.authenticate('jwt', { session: false }), (req, res) => {
-    // console.log(req.body.image)
-    cloudinary.v2.uploader.upload(req.body.image, { width: 200, height: 200, crop: 'limit', tags: req.body.tages, moderation: 'manual' })
+    cloudinary.v2.uploader.upload(req.body.image, { width: 200, height: 200, crop: 'limit', tags: req.body.tags, moderation: 'manual' })
         .then(image => res.json(image))
         .catch(err => res.json(err))
 })
 
+// @route   GET api/admins
+// @desc    Return all admins
+// @access  Public
+router.get('/', (req, res) => {
+    Admin.find()
+        .then(admins => res.json(admins))
+        .catch(err => res.json(err))
+})
 
-// app.post("/uploads", upload.single("image"), async (req, res) => {
-//     const result = await cloudinary.v2.uploader.upload(req.file.path, {
-//       width: 300, height: 300, crop: "limit", tags: req.body.tags, moderation: 'manual'
-//     })
-//     res.redirect("/");
-//   });
 module.exports = router;

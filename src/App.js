@@ -5,6 +5,7 @@ import { BrowserRouter, Route } from "react-router-dom"
 import { logoutAdmin, setCurrentAdmin } from './actions/authActions'
 import Admin from './components/Admin/Admin'
 import Layout from "./components/Layout/Layout"
+import Contributors from './components/Contributors/Contributors'
 import store from './store'
 import setAuthorizationToken from './utils/setAuthToken'
 
@@ -36,6 +37,7 @@ class App extends Component {
           <div>
             <Route exact path='/' component={Layout} />
             <Route path='/admin' component={Admin} />
+            <Route path='/contributors' component={Contributors} />
           </div>
         </BrowserRouter>
       </Provider>

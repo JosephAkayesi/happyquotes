@@ -26,7 +26,7 @@ const db = require('../config/keys').mongoURI;
 cloudinary.config({ cloud_name: keys.cloudName, api_key: keys.apiKey, api_secret: keys.apiSecret })
 
 // Connect to MongoDb
-mongoose.connect(db, { useNewUrlParser: true })
+mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false })
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(`Error: ${err.message}`))
 

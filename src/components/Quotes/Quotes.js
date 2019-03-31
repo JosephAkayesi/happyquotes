@@ -47,7 +47,6 @@ class Quotes extends Component {
                     :
                     <Spinner />
                 }
-
             </div>
         )
     }
