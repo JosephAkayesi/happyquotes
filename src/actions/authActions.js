@@ -1,7 +1,7 @@
 import axios from 'axios'
 import setAuthorizationToken from '../utils/setAuthToken'
 import jwtDecode from 'jwt-decode'
-import { GET_ERRORS, SET_CURRENT_ADMIN, GET_ADMINS } from "./types"
+import { GET_ERRORS, SET_CURRENT_ADMIN } from "./types"
 
 // Register Admin    
 export const registerAdmin = (adminData, history) => dispatch => {

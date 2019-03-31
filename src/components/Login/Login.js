@@ -44,26 +44,25 @@ class Login extends Component {
     
     render() {
         const { errors } = this.state
-
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-6 mx-auto bg-light mt-5 p-5 rounded">
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-md-6 mx-auto bg-light mt-5 p-5 rounded'>
                         <form>
                             <fieldset>
-                                <legend className="display-4 pb-4">Login</legend>
-                                <div className="form-group">
-                                    <label htmlFor="usernameOrEmail">Username or Email</label>
-                                    <input type="text" className={classnames('form-control', { 'is-invalid': errors.usernameOrEmail })} id="usernameOrEmail" placeholder="Enter username or email" onChange={this.onInputChange} defaultValue={this.state.usernameOrEmail} />
+                                <legend className='display-4 pb-4'>Login</legend>
+                                <div className='form-group'>
+                                    <label htmlFor='usernameOrEmail'>Username or Email</label>
+                                    <input type='text' className={classnames('form-control', { 'is-invalid': errors.usernameOrEmail })} id='usernameOrEmail' placeholder='Enter username or email' onChange={this.onInputChange} defaultValue={this.state.usernameOrEmail} />
                                     {errors.usernameOrEmail && (<div className='invalid-feedback'>{errors.usernameOrEmail}</div>)}
                                 </div>
-                                <div className="form-group">
-                                    <label htmlFor="password">Password</label>
-                                    <input type="password" className={classnames('form-control', { 'is-invalid': errors.password })} id="password" placeholder="Password" onChange={this.onInputChange} defaultValue={this.state.password} />
+                                <div className='form-group'>
+                                    <label htmlFor='password'>Password</label>
+                                    <input type='password' className={classnames('form-control', { 'is-invalid': errors.password })} id='password' placeholder='Password' onChange={this.onInputChange} defaultValue={this.state.password} />
                                     {errors.password && (<div className='invalid-feedback'>{errors.password}</div>)}
                                 </div>
-                                <button type="submit" className="btn btn-primary" onClick={this.onFormSubmit} >Submit</button>
-                                <button type="button" className="btn btn-link d-block" style={{ paddingLeft: '0%', marginLeft: '0%', textDecoration: 'none' }}><small className="form-text" onClick={this.props.toggleLoginOrRegisterComponent}>Register instead ?</small></button>
+                                <button type='submit' className='btn btn-primary' onClick={this.onFormSubmit} >Submit</button>
+                                <button type='button' className='btn btn-link d-block' style={{ paddingLeft: '0%', marginLeft: '0%', textDecoration: 'none' }}><small className='form-text' onClick={this.props.toggleLoginOrRegisterComponent}>Register instead ?</small></button>
                             </fieldset>
                         </form>
                     </div>

@@ -17,9 +17,9 @@ class Add extends Component {
 
     render() {
         return (
-            <ul className="navbar-nav ml-auto px-4">
-                <li className="nav-item">
-                    <a className="nav-link" href="#addQuote" onClick={this.toggleModalOpenOrClose}>Add Quote</a>
+            <ul className='navbar-nav ml-auto px-4'>
+                <li className='nav-item'>
+                    <a className='nav-link' href='#addQuote' onClick={this.toggleModalOpenOrClose}>Add Quote</a>
                 </li>
             </ul>
         )
@@ -28,7 +28,6 @@ class Add extends Component {
 
 Add.propTypes = {
     toggleModalOpenOrClose: PropTypes.func.isRequired,
-    // auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({

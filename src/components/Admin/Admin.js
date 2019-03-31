@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter, Redirect, Route } from "react-router-dom"
+import { BrowserRouter, Redirect, Route } from 'react-router-dom'
 import Dashboard from '../Dashboard/Dashboard'
 import Profile from '../Profile/Profile'
 import Entry from '../Entry/Entry'

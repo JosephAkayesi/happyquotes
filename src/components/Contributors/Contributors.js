@@ -7,13 +7,13 @@ import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 
 const Navbar = () => (
-  <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded">
-    <div className="container">
-      <a className="navbar-brand" href="#navbrand">Contributors</a>
-      <div className="collapse navbar-collapse" id="navbarColor02">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to="/" className="nav-link" href="#">Back to Layout</Link>
+  <nav className='navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded'>
+    <div className='container'>
+      <a className='navbar-brand' href='#navbrand'>Contributors</a>
+      <div className='collapse navbar-collapse' id='navbarColor02'>
+        <ul className='navbar-nav mr-auto'>
+          <li className='nav-item'>
+            <Link to='/' className='nav-link' href='#'>Back to Layout</Link>
           </li>
         </ul>
       </div>
@@ -37,7 +37,6 @@ class Contributors extends Component {
 
   render() {
     const { admins, loading } = this.props.admins
-
     return (
       <div>
         <Navbar />
@@ -46,8 +45,8 @@ class Contributors extends Component {
             {admins.map((admin, key) => {
               console.log(admin)
               return (
-                <div key={key} class="d-inline-flex flex-nowrap m-2">
-                  <img href="#" role="button" data-tip={admin.name} style={{ height: '40px', width: '40px', borderRadius: '100%', verticalAlign: 'middle' }} src={admin.avatar} alt="avatar" />
+                <div key={key} className='d-inline-flex flex-nowrap m-2'>
+                  <img href='#' role='button' data-tip={admin.name} style={{ height: '40px', width: '40px', borderRadius: '100%', verticalAlign: 'middle' }} src={admin.avatar} alt='avatar' />
                   <ReactTooltip />
                 </div>)
             })}

@@ -10,19 +10,19 @@ import './Dashboard.css'
 
 const TableRow = ({ row, openQuoteDetails, deleteQuote, admin }) => (
   <tr>
-    <th scope="row" onClick={openQuoteDetails}>{row.author}</th>
-    <td onClick={openQuoteDetails}>{row.quote}<small id="admin" className="form-text text-muted">{row.admin.name}</small></td>
-    <td>{row.admin._id === admin ? <i className="fa fa-close" onClick={deleteQuote}></i> : ''}</td>
+    <th scope='row' onClick={openQuoteDetails}>{row.author}</th>
+    <td onClick={openQuoteDetails}>{row.quote}<small id='admin' className='form-text text-muted'>{row.admin.name}</small></td>
+    <td>{row.admin._id === admin ? <i className='fa fa-close' onClick={deleteQuote}></i> : ''}</td>
   </tr>
 )
 
 const Table = ({ data, openQuoteDetails, deleteQuote, admin }) => (
-  <table className="table table-hover">
+  <table className='table table-hover'>
     <thead>
-      <tr className="table-active">
-        <th scope="col">Author</th>
-        <th scope="col">Quote</th>
-        <th scope="col"></th>
+      <tr className='table-active'>
+        <th scope='col'>Author</th>
+        <th scope='col'>Quote</th>
+        <th scope='col'></th>
       </tr>
     </thead>
     <tbody>
@@ -122,7 +122,6 @@ class Dashboard extends Component {
   render() {
     const { quotes, loading } = this.props.quote
     const { user } = this.props.auth
-
     return (
       <div className='pt-3'>
         {loading ? <Spinner /> :
