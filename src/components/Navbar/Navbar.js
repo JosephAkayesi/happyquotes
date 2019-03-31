@@ -17,18 +17,17 @@ class Navbar extends Component {
 
     render() {
         const { isAuthenticated, user } = this.props.auth
+
         return (
-            <nav className='navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded'>
-                <div className='container'>
-                    <a className='navbar-brand' href='#navbrand'>Admin</a>
-                    <div className='collapse navbar-collapse' id='navbarColor02'>
-                        <ul className='navbar-nav mr-auto'>
-                            <li className='nav-item active'>
-                                {isAuthenticated ? <Link to='/admin/dashboard' className='nav-link' href='#'>Home</Link> : ''}
+            <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded">
+                <div className="container">
+                    <a className="navbar-brand" href="#navbrand">Admin</a>
+                        <ul className="navbar-nav navbar-left mr-auto">
+                            <li className="nav-item active">
+                                {isAuthenticated ? <Link to="/admin/dashboard" className="nav-link" href="#">Home</Link> : ''}
                             </li>
                         </ul>
-                    </div>
-                    {isAuthenticated ? <div className='collapse navbar-collapse'><Add /> <Avatar onLogoutClick={this.onLogoutClick} isAuthenticated={isAuthenticated} user={user} /></div> : null}
+                    {isAuthenticated ? <div className='navbar-right navbar'><Add /> <Avatar onLogoutClick={this.onLogoutClick} isAuthenticated={isAuthenticated} user={user} /></div> : null}
                 </div>
             </nav>
         )

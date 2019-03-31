@@ -17,9 +17,9 @@ class Add extends Component {
 
     render() {
         return (
-            <ul className='navbar-nav ml-auto px-4'>
+            <ul className='navbar-nav ml-auto px-2'>
                 <li className='nav-item'>
-                    <a className='nav-link' href='#addQuote' onClick={this.toggleModalOpenOrClose}>Add Quote</a>
+                    <a href='#addQuote' onClick={this.toggleModalOpenOrClose}>Add Quote</a>
                 </li>
             </ul>
         )

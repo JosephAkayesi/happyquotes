@@ -10,13 +10,11 @@ const Navbar = () => (
   <nav className='navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded'>
     <div className='container'>
       <a className='navbar-brand' href='#navbrand'>Contributors</a>
-      <div className='collapse navbar-collapse' id='navbarColor02'>
-        <ul className='navbar-nav mr-auto'>
+        <ul className='navbar-nav navbar-left mr-auto'>
           <li className='nav-item'>
             <Link to='/' className='nav-link' href='#'>Back to Layout</Link>
           </li>
         </ul>
-      </div>
     </div>
   </nav>
 )
