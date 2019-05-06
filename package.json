@@ -9,7 +9,9 @@
     "server": "nodemon server/server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -26,7 +28,8 @@
     "mongoose": "^5.4.20",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "validator": "^10.11.0"
+    "validator": "^10.11.0",
+    "snyk": "^1.161.1"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,7 +41,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "snyk": "^1.143.5"
-  }
+    "@babel/core": "^7.4.0"
+  },
+  "snyk": true
 }
