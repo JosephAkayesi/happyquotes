@@ -27,5 +27,5 @@ yarn-error.log*
 /.vscode
 
 #configuration
-/config
+config/
 package.json
