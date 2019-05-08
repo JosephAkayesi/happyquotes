@@ -28,6 +28,4 @@ yarn-error.log*
 
 #configuration
 config/
-./config/keys.js
-/config/passport.js
-package.json
+package.jsonconfig
