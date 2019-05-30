@@ -41,7 +41,9 @@ require('../config/passport')(passport)
 app.use('/api/quotes', quotes)
 app.use('/api/admins', admins)
 
-// Test route 
+// @route   GET /
+// @desc    Test server route
+// @access  Public
 app.get('/', (req, res) => {
     res.json({msg: 'Test route works'})
 })
