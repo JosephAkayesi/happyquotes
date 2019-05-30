@@ -1,20 +1,23 @@
+// Use environment variables
+require('dotenv').config()
+
 if(process.env.NODE_ENV){
     module.exports = {
-        mongoURI: 'mongodb://joseph:joseph94@ds046027.mlab.com:46027/todo',
-        secretOrKey: 'secret',
-        magicPassword: 'crystal',
-        cloudName: 'tutcan',
-        apiKey: '451298485553267',
-        apiSecret: 'og2iz8NaKlSgAxIwpRfFsF-0czQ'
+        mongoURI: process.env.PROD_MONGOURI,
+        secretOrKey: process.env.PROD_SECRET,
+        magicPassword: process.env.PROD_MAGICPASSWORD,
+        cloudName: process.env.PROD_CLOUDINARYCLOUDNAME,
+        apiKey: process.env.PROD_CLOUDINARYAPIKEY,
+        apiSecret: process.env.PROD_CLOUDINARYAPISECRET
     }
 }
 else {
     module.exports = {
-        mongoURI:  'mongodb://localhost/happyquotes',
-        secretOrKey: 'secret',
-        magicPassword: 'crystal',
-        cloudName: 'tutcan',
-        apiKey: '451298485553267',
-        apiSecret: 'og2iz8NaKlSgAxIwpRfFsF-0czQ'
+        mongoURI: process.env.DEV_MONGOURI,
+        secretOrKey: process.env.DEV_SECRET,
+        magicPassword: process.env.DEV_MAGICPASSWORD,
+        cloudName: process.env.DEV_CLOUDINARYCLOUDNAME,
+        apiKey: process.env.DEV_CLOUDINARYAPIKEY,
+        apiSecret: process.env.DEV_CLOUDINARYAPISECRET
     }
 }

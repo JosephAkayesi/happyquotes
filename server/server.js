@@ -16,7 +16,7 @@ app.use(cors())
 app.use(bodyParser.urlencoded({ limit: '60mb', extended: false }))
 app.use(bodyParser.json({limit: '60mb', extended: false}))
 
-// Helmet middleware
+// Helmet Middleware
 app.use(helmet())
 
 // Db Config
@@ -25,7 +25,7 @@ const db = require('../config/keys').mongoURI;
 //Cloudinary Config
 cloudinary.config({ cloud_name: keys.cloudName, api_key: keys.apiKey, api_secret: keys.apiSecret })
 
-// Connect to MongoDb
+// Connect to MongoDB
 mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false })
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(`Error: ${err.message}`))
