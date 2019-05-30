@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "test": "jest --verbose || true",
+    "test": "jest --verbose --forceExit --detectOpenHandles || true",
     "client-install": "npm install --prefix client",
     "start": "node server/server.js",
     "server": "nodemon server/server.js",
@@ -32,6 +32,10 @@
     "snyk": "^1.161.1",
     "validator": "^10.11.0"
   },
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "node"
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -42,7 +46,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@babel/core": "^7.4.0"
+    "@babel/core": "^7.4.0",
+    "supertest": "^4.0.2"
   },
   "snyk": true
 }
