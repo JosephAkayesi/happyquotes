@@ -16,6 +16,5 @@ else {
         cloudName: 'tutcan',
         apiKey: '451298485553267',
         apiSecret: 'og2iz8NaKlSgAxIwpRfFsF-0czQ'
-
     }
 }

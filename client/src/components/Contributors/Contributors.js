@@ -41,7 +41,6 @@ class Contributors extends Component {
         {loading ? <Spinner /> :
           <div className='container'>
             {admins.map((admin, key) => {
-              console.log(admin)
               return (
                 <div key={key} className='d-inline-flex flex-nowrap m-2'>
                   <img href='#' role='button' data-tip={admin.name} style={{ height: '40px', width: '40px', borderRadius: '100%', verticalAlign: 'middle' }} src={admin.avatar} alt='avatar' />
