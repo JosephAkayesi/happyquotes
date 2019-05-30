@@ -41,13 +41,6 @@ require('../config/passport')(passport)
 app.use('/api/quotes', quotes)
 app.use('/api/admins', admins)
 
-// @route   GET /
-// @desc    Test server route
-// @access  Public
-app.get('/', (req, res) => {
-    res.json({msg: 'Test route works'})
-})
-
 const port = process.env.PORT || 5000
 
 // Server static assets if in production
