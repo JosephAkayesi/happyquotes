@@ -36,8 +36,8 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Route exact path='/' component={Layout} />
-            <Route exact path='/admin' component={Admin} />
-            <Route exact path='/contributors' component={Contributors} />
+            <Route path='/admin' component={Admin} />
+            <Route path='/contributors' component={Contributors} />
           </div>
         </BrowserRouter>
       </Provider>
