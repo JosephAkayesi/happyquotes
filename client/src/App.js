@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode'
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import { BrowserRouter, Route } from "react-router-dom"
+import { HashRouter, Route } from "react-router-dom"
 import { logoutAdmin, setCurrentAdmin } from './actions/authActions'
 import Admin from './components/Admin/Admin'
 import Layout from "./components/Layout/Layout"
@@ -33,13 +33,13 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter>
           <div>
             <Route exact path='/' component={Layout} />
             <Route exact path='/admin' component={Admin} />
             <Route exact path='/contributors' component={Contributors} />
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </Provider>
     )
   }
