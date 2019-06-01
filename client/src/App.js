@@ -35,7 +35,7 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <div>
-            <Route exact path='/' component={Layout} />
+            <Route path='/' component={Layout} />
             <Route exact path='/admin' component={Admin} />
             <Route exact path='/contributors' component={Contributors} />
           </div>
