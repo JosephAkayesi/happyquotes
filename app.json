@@ -1,0 +1,39 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "PROD_CLOUDINARYAPIKEY": {
+      "required": true
+    },
+    "PROD_CLOUDINARYAPISECRET": {
+      "required": true
+    },
+    "PROD_CLOUDINARYCLOUDNAME": {
+      "required": true
+    },
+    "PROD_MAGICPASSWORD": {
+      "required": true
+    },
+    "PROD_MONGOURI": {
+      "required": true
+    },
+    "PROD_SECRET": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "happyquotes",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
