@@ -6,15 +6,15 @@ afterAll(async () => {
 })
 
 describe('Server should', () => {
-    it('send a status 200', async (done) => {
+    it('send a status 404', async (done) => {
         const res = await request(app).get('/')
-        expect(res.status).toBe(200)
+        expect(res.status).toBe(404)
         done()
     })
 
     it('send a statusType of 4', async (done) => {
         const res = await request(app).get('/')
-        expect(res.statusType).toBe(2)
+        expect(res.statusType).toBe(4)
         done()
     })
 })

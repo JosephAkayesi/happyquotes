@@ -12,7 +12,7 @@ const Navbar = () => (
       <a className='navbar-brand' href='#navbrand'>Contributors</a>
         <ul className='navbar-nav navbar-left mr-auto'>
           <li className='nav-item'>
-            <Link to='/' className='nav-link' href='#'>Back to Layout</Link>
+            <Link to='/' className='nav-link' href='#'>Home</Link>
           </li>
         </ul>
     </div>
