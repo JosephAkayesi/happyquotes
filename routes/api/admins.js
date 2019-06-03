@@ -199,7 +199,7 @@ router.post('/upload', passport.authenticate('jwt', { session: false }), (req, r
 // @desc    Return all admins
 // @access  Public
 router.get('/', (req, res) => {
-    Admin.find()
+    Admin.find({}, 'name avatar')
         .then(admins => res.json(admins))
         .catch(err => res.json(err))
 })
