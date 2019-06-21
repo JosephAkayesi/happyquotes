@@ -7,5 +7,5 @@ The app allows administrators to register only by providing a magic link. After 
 * Quotes customized by administrators can be seen on the home screen.
 * A link to ```/contributors``` is at the footer which can be visited. Contributors are those that have added a quote or more.
 * To register as a contributor, visit Visit https://happyquotes-production.herokuapp.com/admin
-* Sign up with th magic password 'crystal'
+* Sign up with th magic password ```crystal```
 * Add your quote and personalize your profile.
