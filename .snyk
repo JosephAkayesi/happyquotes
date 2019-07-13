@@ -35,3 +35,5 @@ patch:
         patched: '2019-07-03T22:49:29.880Z'
     - snyk > @snyk/dep-graph > graphlib > lodash:
         patched: '2019-07-03T22:49:29.880Z'
+    - snyk > snyk-php-plugin > @snyk/composer-lockfile-parser > lodash:
+        patched: '2019-07-04T11:59:36.506Z'
