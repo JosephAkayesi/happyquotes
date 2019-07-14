@@ -3,7 +3,7 @@ const app = express()
 const keys = require('../config/keys')
 const Database = require('../config/database')
 const Middleware = require('../config/middleware')
-const cloudinary = require('cloudinary')
+const Cloudinary = require('../config/cloudinary')
 const path = require('path')
 const Routes = require('../config/routes')
 
@@ -18,13 +18,10 @@ app.use(Middleware.BodyParser().initialize.json)
 app.use(Middleware.Helmet().initialize)
 
 //Cloudinary Config
-cloudinary.config({ cloud_name: keys.cloudName, api_key: keys.apiKey, api_secret: keys.apiSecret })
-
-// Db Config
-const db = require('../config/keys').mongoURI;
+Cloudinary.initializeCloudinary(keys)
 
 // Connect to MongoDB
-Database.connectDatabase(db)
+Database.connectDatabase(keys.mongoURI)
 
 // Passport Middleware
 app.use(Middleware.Passport().initialize);
