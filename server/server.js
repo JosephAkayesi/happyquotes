@@ -2,24 +2,21 @@ const express = require('express')
 const app = express()
 const keys = require('../config/keys')
 const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
-const passport = require('passport')
-const cors = require('cors')
-const helmet = require('helmet')
+const Middleware = require('../config/middleware')
 const cloudinary = require('cloudinary')
 const path = require('path')
 const admins = require('../routes/api/admins')
 const quotes = require('../routes/api/quotes')
 
 // Cors middleware
-app.use(cors())
+app.use(Middleware.Cors().initialize)
 
 // Body Parser Middleware
-app.use(bodyParser.urlencoded({ limit: '60mb', extended: false }))
-app.use(bodyParser.json({ limit: '60mb', extended: false }))
+app.use(Middleware.BodyParser().initialize.urlEncoded)
+app.use(Middleware.BodyParser().initialize.json)
 
 // Helmet Middleware
-app.use(helmet())
+app.use(Middleware.Helmet().initialize)
 
 // Db Config
 const db = require('../config/keys').mongoURI;
@@ -33,10 +30,10 @@ mongoose.connect(db, { useNewUrlParser: true })
     .catch(err => console.log(`Error: ${err.message}`))
 
 // Passport Middleware
-app.use(passport.initialize());
+app.use(Middleware.Passport().initialize);
 
 // Passport Config
-require('../config/passport')(passport)
+require('../config/passport')(Middleware.Passport().getVariable)
 
 // Use Routes
 app.use('/api/quotes', quotes)
