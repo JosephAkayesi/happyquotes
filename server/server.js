@@ -30,8 +30,8 @@ app.use(Middleware.Passport().initialize);
 require('../config/passport')(Middleware.Passport().getVariable)
 
 // Use Routes
-app.use('/api/quotes', Routes.Admin().use)
-app.use('/api/admins', Routes.Quote().use)
+app.use('/api/quotes', Routes.Quote().use)
+app.use('/api/admins', Routes.Admin().use)
 
 const port = process.env.PORT || 5000
 

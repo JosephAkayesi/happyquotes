@@ -152,14 +152,14 @@ router.post('/login', (req, res) => {
 // @route   PUT api/admins
 // @desc    Update admin profile
 // @access  Private
-router.put('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.put('/', passport.authenticate('jwt', { session: false }), (req, res) => {
     const profileFields = {}
 
-    if(req.body.name) profileFields.name = req.body.name
-    if(req.body.username) profileFields.username = req.body.username 
-    if(req.body.image) profileFields.avatar = req.body.image 
+    if (req.body.name) profileFields.name = req.body.name
+    if (req.body.username) profileFields.username = req.body.username
+    if (req.body.image) profileFields.avatar = req.body.image
 
-    Admin.findOneAndUpdate({_id : req.user.id}, {$set: profileFields}, {new: true})
+    Admin.findOneAndUpdate({ _id: req.user.id }, { $set: profileFields }, { new: true })
         .then(admin => {
             const payload = { id: admin.id, name: admin.name, username: admin.username, avatar: admin.avatar }; //Create JWT Payload
 
@@ -190,7 +190,15 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (req, r
 // @desc    Upload admin avatar
 // @access  Private
 router.post('/upload', passport.authenticate('jwt', { session: false }), (req, res) => {
-    cloudinary.v2.uploader.upload(req.body.image, { width: 200, height: 200, crop: 'limit', tags: req.body.tags, moderation: 'manual' })
+    const options = {
+        width: 200,
+        height: 200,
+        crop: 'limit',
+        tags: req.body.tags,
+        moderation: 'manual'
+    }
+
+    cloudinary.v2.uploader.upload(req.body.image, { ...options })
         .then(image => res.json(image))
         .catch(err => res.json(err))
 })
@@ -204,4 +212,4 @@ router.get('/', (req, res) => {
         .catch(err => res.json(err))
 })
 
-module.exports = router;
+module.exports = router

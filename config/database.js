@@ -4,7 +4,7 @@ class Database {
     }
 
     connectDatabase(db) {
-        this.mongoose.connect(db, { useNewUrlParser: true })
+        this.mongoose.connect(db, { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true })
             .then(() => console.log('MongoDB Connected'))
             .catch(err => console.log(`Error: ${err.message}`))
     }
