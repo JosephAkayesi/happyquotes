@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const keys = require('../config/keys')
-const mongoose = require('mongoose')
+const Database = require('../config/database')
 const Middleware = require('../config/middleware')
 const cloudinary = require('cloudinary')
 const path = require('path')
@@ -18,16 +18,14 @@ app.use(Middleware.BodyParser().initialize.json)
 // Helmet Middleware
 app.use(Middleware.Helmet().initialize)
 
-// Db Config
-const db = require('../config/keys').mongoURI;
-
 //Cloudinary Config
 cloudinary.config({ cloud_name: keys.cloudName, api_key: keys.apiKey, api_secret: keys.apiSecret })
 
+// Db Config
+const db = require('../config/keys').mongoURI;
+
 // Connect to MongoDB
-mongoose.connect(db, { useNewUrlParser: true })
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.log(`Error: ${err.message}`))
+Database.connectDatabase(db)
 
 // Passport Middleware
 app.use(Middleware.Passport().initialize);
@@ -47,7 +45,6 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'))
 
     app.get('/*', (req, res) => {
-        // res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
         res.sendFile(path.join(__dirname, '../client/build/index.html'))
     })
 }
@@ -57,4 +54,3 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 module.exports = app
-
