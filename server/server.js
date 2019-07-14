@@ -5,8 +5,7 @@ const Database = require('../config/database')
 const Middleware = require('../config/middleware')
 const cloudinary = require('cloudinary')
 const path = require('path')
-const admins = require('../routes/api/admins')
-const quotes = require('../routes/api/quotes')
+const Routes = require('../config/routes')
 
 // Cors middleware
 app.use(Middleware.Cors().initialize)
@@ -34,8 +33,8 @@ app.use(Middleware.Passport().initialize);
 require('../config/passport')(Middleware.Passport().getVariable)
 
 // Use Routes
-app.use('/api/quotes', quotes)
-app.use('/api/admins', admins)
+app.use('/api/quotes', Routes.Admin().use)
+app.use('/api/admins', Routes.Quote().use)
 
 const port = process.env.PORT || 5000
 
