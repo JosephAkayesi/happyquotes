@@ -8,7 +8,9 @@ if(process.env.NODE_ENV){
         magicPassword: process.env.PROD_MAGICPASSWORD,
         cloudName: process.env.PROD_CLOUDINARYCLOUDNAME,
         apiKey: process.env.PROD_CLOUDINARYAPIKEY,
-        apiSecret: process.env.PROD_CLOUDINARYAPISECRET
+        apiSecret: process.env.PROD_CLOUDINARYAPISECRET,
+        timberAPIKey: process.env.TIMBER_API_KEY,
+        timberSourceID: process.env.TIMBER_SOURCE_ID
     }
 }
 else {
@@ -18,6 +20,8 @@ else {
         magicPassword: process.env.DEV_MAGICPASSWORD,
         cloudName: process.env.DEV_CLOUDINARYCLOUDNAME,
         apiKey: process.env.DEV_CLOUDINARYAPIKEY,
-        apiSecret: process.env.DEV_CLOUDINARYAPISECRET
+        apiSecret: process.env.DEV_CLOUDINARYAPISECRET,
+        timberAPIKey: process.env.TIMBER_API_KEY,
+        timberSourceID: process.env.TIMBER_SOURCE_ID
     }
 }
