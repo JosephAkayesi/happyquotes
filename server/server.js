@@ -6,6 +6,7 @@ const Middleware = require('../config/middleware')
 const Cloudinary = require('../config/cloudinary')
 const path = require('path')
 const Routes = require('../config/routes')
+const logger = require('../config/logger')
 
 // Cors middleware
 app.use(Middleware.Cors().initialize)
@@ -46,7 +47,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 if (process.env.NODE_ENV !== 'test') {
-    app.listen(port, () => { console.log(`Server running on port ${port}`) })
+    app.listen(port, () => { 
+        logger.info(`Server running on port ${port}`)
+    })
 }
 
 module.exports = app

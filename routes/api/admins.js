@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const keys = require('../../config/keys')
 const passport = require('passport')
 const cloudinary = require('cloudinary')
+const logger = require('../../config/logger')
 
 // Load input validation
 const validateRegisterInput = require('../../validation/register')
@@ -22,6 +23,7 @@ router.get('/test', (req, res) => res.json({ msg: 'Admins route works' }))
 // @desc    Register user
 // @access  Public
 router.post('/register', (req, res) => {
+    logger.info(`POST /register ${req.body.name} ${req.body.username} ${req.body.email}`)
     const { errors, isValid } = validateRegisterInput(req.body);
 
     // Check Validation
@@ -33,10 +35,12 @@ router.post('/register', (req, res) => {
         .or([{ email: req.body.email }, { username: req.body.username }])
         .then(admin => {
             if (admin !== null && admin.email.toLowerCase === req.body.email.toLowerCase) {
+                logger.info(`${req.body.email} already exists.`)
                 errors.email = 'Email already exists'
                 return res.status(400).json(errors)
             }
             else if (admin !== null && admin.username.toLowerCase === req.body.username.toLowerCase) {
+                logger.info(`${req.body.username} already exists.`)
                 errors.username = 'Username already exists'
                 return res.status(400).json(errors)
             }
@@ -70,6 +74,7 @@ router.post('/register', (req, res) => {
                                     .or([{ email: email }, { username: username }])
                                     .then(admin => {
                                         if (!admin) {
+                                            logger.error(`User ${username} ${email} not found.`)
                                             errors.usernameOrEmail = 'User not found';
                                             return res.status(404).json(errors);
                                         }
@@ -90,6 +95,7 @@ router.post('/register', (req, res) => {
                                                     });
                                                 }
                                                 else {
+                                                    logger.info(`User ${admin.username} password incorrect.`)
                                                     errors.password = 'Password incorrect';
                                                     return res.status(400).json(errors);
                                                 }
@@ -107,6 +113,7 @@ router.post('/register', (req, res) => {
 // @desc    Login admin / Returning JWT token
 // @access  Public
 router.post('/login', (req, res) => {
+    logger.info(`POST /login ${req.body.email} ${req.body.username}`)
     const { errors, isValid } = validateLoginInput(req.body);
 
     // Check Validation
@@ -122,6 +129,7 @@ router.post('/login', (req, res) => {
         .or([{ email: usernameOrEmail }, { username: usernameOrEmail }])
         .then(admin => {
             if (!admin) {
+                logger.info(`User ${req.body.username} ${req.body.email} not found.`)
                 errors.usernameOrEmail = 'User not found';
                 return res.status(404).json(errors);
             }
@@ -142,6 +150,7 @@ router.post('/login', (req, res) => {
                         });
                     }
                     else {
+                        logger.info(`User ${req.body.username} ${req.body.email} password incorrect when trying to log in.`)
                         errors.password = 'Password incorrect';
                         return res.status(400).json(errors);
                     }

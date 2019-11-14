@@ -14,6 +14,7 @@
     "prepare": "npm run snyk-protect"
   },
   "dependencies": {
+    "@timberio/node": "^0.35.0",
     "axios": "^0.19.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -23,14 +24,16 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "gravatar": "^1.8.0",
-    "helmet": "^3.18.0",
+    "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
+    "moment": "^2.24.0",
     "mongoose": "^5.5.12",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "snyk": "^1.191.0",
-    "validator": "^11.0.0"
+    "snyk": "^1.247.1",
+    "validator": "^11.0.0",
+    "winston": "^3.2.1"
   },
   "jest": {
     "verbose": true,
