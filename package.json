@@ -31,7 +31,7 @@
     "mongoose": "^5.7.5",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "snyk": "^1.247.1",
+    "snyk": "^1.316.1",
     "validator": "^11.0.0",
     "winston": "^3.2.1"
   },
